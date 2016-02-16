@@ -1,0 +1,23 @@
+/**
+ * Contains functions for the socket
+ */
+
+module.exports = function (io) {
+ 
+	io.sockets.on('connection', function(socket) {
+    
+	console.log("User has connected");
+    
+    socket.on('disconnect', function(){
+	    console.log('user disconnected');
+	  });
+    
+    socket.on('chat message',function(msg){
+    	
+    	io.emit('chat message', { 'msg':msg, 'for': 'everyone' });
+    });
+  });
+	
+	
+	
+};

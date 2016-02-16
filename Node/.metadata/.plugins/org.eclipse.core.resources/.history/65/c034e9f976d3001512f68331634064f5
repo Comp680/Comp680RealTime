@@ -1,0 +1,20 @@
+/**
+ * New node file
+ */
+var router = express.Router();
+var app = require('express').createServer();
+var io = require('socket.io')(app);
+
+
+/* GET users listing. */
+router.get('/', function(req, res, next) {
+	res.render('chat',{title:'chat'});
+});
+
+io.on('connection',function(socket){
+	console.log("a user connected");
+}); 
+
+
+
+module.exports = router;

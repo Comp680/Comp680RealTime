@@ -35,7 +35,7 @@ server.on('listening', onListening);
 
 var io = require('socket.io')(server);
 var chat_sockets = require('../controller/chat_socket');
-chat_sockets(io);
+chat_sockets(io);//Open sockets using opening
 
 /**
  * Normalize a port into a number, string, or false.

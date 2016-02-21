@@ -1,0 +1,59 @@
+/**
+ * Contains all moves neccessary to play tic-tac-toe
+ */
+var socket = io.connect("http://localhost:3000");//Create a socket
+var user_letter;
+//Socket Information
+socket.on('user connect',function(msg){
+	user_letter = msg.user_number==1 ? "X" : "O";
+	
+
+});
+
+socket.on('chat message', function(msg) {//Update the board when a response is given
+	var board_pos = $(".tic-tac-board td");
+	for(var i=0;i<board_pos.length;i++){
+		$(board_pos[i]).text(msg.msg[i]);
+	}
+	waiting_for_user=false;
+	
+});
+
+
+$(document).ready(function() {
+	var waiting_for_user = false;
+	
+	
+	$(".tic-tac-board td").on('click', function() {
+		update_board($(this));//Update the board
+		send_move();
+	});
+	
+	//Update the board
+	var update_board = function(position){
+		if ($(position).text() === "" && !waiting_for_user) {
+			$(position).text(user_letter);
+		}
+	};
+	
+	var send_move = function(move){
+		var array_list = $.map($(".tic-tac-board td"),function(val,index){
+			if($(val).text()=='X'){
+				return "X";
+			}else if($(val).text()=="O"){
+				return "O";
+			}else{
+				return "";
+			}
+			
+		});
+		waiting_for_user = true;
+		socket.emit('chat message', {'msg':array_list,'for':"not_me"});
+		//Send the board move
+		
+		
+	};
+	
+	
+
+});

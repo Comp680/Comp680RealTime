@@ -1,0 +1,28 @@
+/**
+ * Contains all moves neccessary to play tic-tac-toe
+ */
+
+$(document).ready(function() {
+	var waiting_for_user = false;
+	
+	
+	$(".tic-tac-board td").on('click', function() {
+		update_board($(this));//Update the board
+		send_move();
+	});
+	
+	//Update the board
+	var update_board = function(position){
+		if ($(position).text() === "" && !waiting_for_user) {
+			$(position).text("X");
+		}
+	};
+	
+	var send_move = function(move){
+		var board_design = $(".tic-tac-board");//Select all the boards
+		//Send the board move
+		waiting_for_user = true;
+		
+	}
+
+});

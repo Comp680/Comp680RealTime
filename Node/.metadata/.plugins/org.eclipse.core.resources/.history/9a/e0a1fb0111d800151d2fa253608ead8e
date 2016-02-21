@@ -1,0 +1,36 @@
+/**
+ * Contains all moves neccessary to play tic-tac-toe
+ */
+var socket = io.connect("http://localhost:3000");//Create a socket
+
+$(document).ready(function() {
+	var waiting_for_user = false;
+	
+	
+	$(".tic-tac-board td").on('click', function() {
+		update_board($(this));//Update the board
+		send_move();
+	});
+	
+	//Update the board
+	var update_board = function(position){
+		if ($(position).text() === "" && !waiting_for_user) {
+			$(position).text("X");
+		}
+	};
+	
+	var send_move = function(move){
+		var board_design = ;//Select all the boards
+		$(".tic-tac-board tr")
+		socket.emit('chat message', {'msg':board_design});
+		//Send the board move
+		waiting_for_user = true;
+		
+	};
+	
+	socket.on('chat message', function(msg) {
+		$(".tic-tac-board").html(msg.msg);
+		
+	});
+
+});

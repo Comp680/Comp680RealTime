@@ -3,10 +3,10 @@
  */
 
 var socket = io.connect();//Create a socket
-
+var room;
 //Send a message
 $("form").submit(function(event){
-	socket.emit('chat message', $('#m').val());
+	socket.emit('chat message', {'msg':$('#m').val(),'room':room});
 	$('#m').val('');
 	event.preventDefault();
 	return false;
@@ -18,5 +18,7 @@ socket.on('chat message', function(msg){
   });
 
 socket.on('user connect', function(msg){
+	room = msg.room;
 	$('#messages').append($('<li><b>' + msg.msg + '</b></li>'));
 });
+

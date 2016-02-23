@@ -75,13 +75,14 @@ $(document).ready(function() {
 		
 		number_in_row==0;
 		var number_in_second_angle =0;
+		var opp = board.length-1;
 		//Check Angles
 		
 			for(var j=0;j<row_length-1;j++){
 				if(board[(j*row_length) + j]==(board[((j+1)*row_length) + j + 1]) && board[(j*row_length) + j]!=""){
 					number_in_row++;
 				}
-				if(board[(row_length -1) + ((row_length -1)*j) ] ==board[(row_length -1) + ((row_length -1)*(j+1)) ] && board[(row_length -1) + ((row_length -1)*j) ]!=""){
+				if(board[opp - ((j*row_length) - j)] == board[opp - (((j+1)*row_length)-j-1)] && board[opp - ((j*row_length) - j)]!=""){
 					number_in_second_angle++;
 				}
 			}
@@ -139,10 +140,6 @@ $(document).ready(function() {
 		var board_pos = $(".tic-tac-board td");
 		for (var i = 0; i < board_pos.length; i++) {
 			$(board_pos[i]).text(msg.msg[i]);
-		}
-		var win = game_finished(msg.msg);
-		if(win){
-			alert("Lost");
 		}
 		waiting_for_user = false;
 

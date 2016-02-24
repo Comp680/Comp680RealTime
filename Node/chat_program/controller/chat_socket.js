@@ -96,6 +96,11 @@ var wait_rooms = new waiting_rooms(room_min_size, room_max_size);
 module.exports = function(io) {
 
 	io.sockets.on('connection', function(socket) {
+		socket.emit('connection status',"Connection Successful");
+	});
+		
+	// User wants to join a game
+	socket.on('join game',function(){
 		var room_info = wait_rooms.add_to_room(socket);
 		var room_num = room_info.room;
 
@@ -106,6 +111,7 @@ module.exports = function(io) {
 			'msg' : room_num,
 			'room_number': room_num,
 			'player_number':room_info.user_number
+		});
 		});
 
 		socket.on('disconnect', function() {
@@ -120,7 +126,7 @@ module.exports = function(io) {
 			}
 		});
 
-		socket.on('game message',function(msg){//Emit a game message
+		socket.on('game message',function(msg){// Emit a game message
 			emit_new_message(socket, msg,'game message');
 		});
 		

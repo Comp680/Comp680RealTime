@@ -4,21 +4,24 @@
 
 // Object for containing information about the rooms
 function waiting_rooms(min_room_size, max_room_size) {
-	this.room_waiting = [0];
+	this.room_waiting = [ 0 ];
 	this.number_in_room = 0;
 	this.add_to_room = function(user_socker) {
-		if(this.number_in_room >= max_room_size){
+		if (this.number_in_room >= max_room_size) {
 			this.room_waiting[0]++;
 			this.number_in_room = 0;
 		}
 		this.number_in_room++;
-		return {'room':this.room_waiting[0],'user_number':this.number_in_room};
-		
+		return {
+			'room' : this.room_waiting[0],
+			'user_number' : this.number_in_room
+		};
+
 	}
 
 	this.find_room_by_socket_id = function(socket_id, rooms) {// Find the room
-																// the user
-																// resides in
+		// the user
+		// resides in
 		var return_value = [];
 		return_value.push(-1);
 		for ( var key in rooms) {
@@ -31,7 +34,7 @@ function waiting_rooms(min_room_size, max_room_size) {
 					} else {
 						// Current_socket_room
 						return_value[0] = key;// Only room the user is in is
-												// his own
+						// his own
 					}
 
 				}
@@ -73,14 +76,14 @@ function search_object(obj, value) {
 	}
 }
 
-function emit_new_message(socket, msg, emit_to){
+function emit_new_message(socket, msg, emit_to) {
 	var rooms = socket.adapter.rooms;
 	rooms = wait_rooms.find_room_by_socket_id(socket.id, rooms);
-	if(msg['for'].toLowerCase()=='not_me'){
+	if (msg['for'].toLowerCase() == 'not_me') {
 		socket.broadcast.to(rooms.pop()).emit(emit_to, {
 			'msg' : msg.msg,
 		});
-	}else{
+	} else {
 		socket.to(rooms.pop()).emit(emit_to, {
 			'msg' : msg.msg,
 		});
@@ -96,22 +99,21 @@ var wait_rooms = new waiting_rooms(room_min_size, room_max_size);
 module.exports = function(io) {
 
 	io.sockets.on('connection', function(socket) {
-		socket.emit('connection status',"Connection Successful");
-	});
-		
-	// User wants to join a game
-	socket.on('join game',function(){
-		var room_info = wait_rooms.add_to_room(socket);
-		var room_num = room_info.room;
+		socket.emit('connection status', "Connection Successful");
 
-		socket.join(room_num);
-		
-		io.to(socket.id).emit('user connect', {// Send message to user
-													// based on their room
-			'msg' : room_num,
-			'room_number': room_num,
-			'player_number':room_info.user_number
-		});
+		// User wants to join a game
+		socket.on('join game', function() {
+			var room_info = wait_rooms.add_to_room(socket);
+			var room_num = room_info.room;
+
+			socket.join(room_num);
+
+			io.to(socket.id).emit('user connect', {// Send message to user
+				// based on their room
+				'msg' : room_num,
+				'room_number' : room_num,
+				'player_number' : room_info.user_number
+			});
 		});
 
 		socket.on('disconnect', function() {
@@ -126,14 +128,13 @@ module.exports = function(io) {
 			}
 		});
 
-		socket.on('game message',function(msg){// Emit a game message
-			emit_new_message(socket, msg,'game message');
+		socket.on('game message', function(msg) {// Emit a game message
+			emit_new_message(socket, msg, 'game message');
 		});
-		
+
 		socket.on('chat message', function(msg) {
-			emit_new_message(socket, msg,'chat message');
-			
+			emit_new_message(socket, msg, 'chat message');
+
 		});
 	});
-
 };

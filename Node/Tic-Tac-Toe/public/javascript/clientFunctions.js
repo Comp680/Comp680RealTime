@@ -17,7 +17,15 @@
 	
 	//Server - the server to send information to
 	//options - JSON object containing information about the object
-	$.fn.ClientGame = function(server,options) {
+	$.fn.ClientGame = function(server,game_id,options) {
+		
+		if(server==null){
+			throw new error("An ip address/web domain is required. Please enter a server address.");
+		}
+		
+		if(game_id==null){
+			throw new error("A id for your game is required. Please pass in a game id.");
+		}
 		
 		this._options = {
 				onUserJoin: null,//User joins lobby
@@ -38,19 +46,19 @@
 			this.socket = io.connect(server);// Create a socket
 			
 			if(this._options.connectionStatus !==null){
-				socket.on('connection status',connectionStatus(msg));
+				socket.on('connection_status',connectionStatus(msg));
 			}
 			
 			if(this._options.onUserJoin!==null){//Create callback for user join
-				socket.on('user join',_options.onUserJoin(msg));
+				socket.on('user_join',_options.onUserJoin(msg));
 			}
 			
 			if(this._options.onRecievePacket!==null){
-				socket.on('game data', _options.onRecievePacket(msg));
+				socket.on('game_updatemsg.', _options.onRecievePacket(msg));
 			}
 			
 			if(this._options.onGameStart!==null){
-				socket.on('game start',_options.onGameStart(msg));
+				socket.on('game_start',_options.onGameStart(msg));
 			}
 			
 			
@@ -60,7 +68,7 @@
 		// other clients this client has disconnected
 		// msg - the json object containing information to send to other users
 		function disconnectFromServer(msg) {
-			socket.emit("user disconnecting",create_message(msg));
+			socket.emit("user_disconnecting",create_message(msg));
 			window.clearTimeout(this.timeout);
 			delete socket;
 		}
@@ -73,7 +81,7 @@
 		// game_callback - callback function in the form function(msg), should
 		// contain what to do once the game has started
 		function joinGame(join_msg) {
-			socket.emit("join game",create_message(join_msg));
+			socket.emit("join_game",create_message(join_msg));
 			
 		}
 
@@ -88,13 +96,18 @@
 		function getUUID() {
 
 		}
+		
+		//Allows a client to send a message to currently active game
+		function passGameData(msg){
+			socket.emit("game_message",create_message(msg));
+		}
 
 		// timed keep alive letting server know that client is still connected -
 		// client must call this function every TBD after connection
 		// seconds - number seconds between keep alive messages
 		function timingUpdate(seconds) {
 			this.timeout = window.setTimeout(function(){
-				socket.emit('keep alive');
+				socket.emit('keep_alive');
 			},second*1000);
 		}
 	}

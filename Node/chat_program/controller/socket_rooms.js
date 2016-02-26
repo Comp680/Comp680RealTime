@@ -11,7 +11,7 @@ function waiting_rooms(min_room_size, max_room_size) {
 			this.number_in_room = 0;
 		}
 		this.number_in_room++;
-		return {'room':this.room_waiting[0],'user_number':this.number_in_room};
+		return {'room':this.room_waiting[0],'user_number':this.number_in_room,'full':this.number_in_room >= max_room_size};
 		
 	}
 

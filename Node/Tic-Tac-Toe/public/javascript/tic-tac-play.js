@@ -1,7 +1,7 @@
 /**
  * Contains all moves neccessary to play tic-tac-toe
  */
-var socket = io.connect("http://localhost:3000");// Create a socket
+
 var user_letter;
 // Socket Information
 socket.on('user connect', function(msg) {

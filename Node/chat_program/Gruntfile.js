@@ -9,13 +9,13 @@ module.exports = function(grunt) {
 				pkg : grunt.file.readJSON('package.json'),
 
 				concat : {
-					socket_js : {
+					/*socket_js : {
 						files : [ {
 							src : [ 'controller/server_sockets.js',
 									'controller/socket_rooms.js' ],
 							dest : 'controller/new_server_sockets.js'
 						} ],
-					}
+					}*/
 
 				},
 				copy : {

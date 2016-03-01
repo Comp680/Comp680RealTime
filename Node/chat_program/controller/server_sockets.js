@@ -2,12 +2,12 @@
  * New node file
  */
 
-var uuid = require('node-uuid');
+
 
 function emit_new_message(socket, msg, emit_to) {
 	var rooms = socket.adapter.rooms;
 	rooms = wait_rooms.find_room_by_socket_id(socket.id, rooms);
-	if (msg['for'].toLowerCase() == 'not_me') {
+	if (typeof msg['for']!="undefined" && msg['for'].toLowerCase() == 'not_me') {
 		socket.broadcast.to(rooms.pop()).emit(emit_to, {
 			'msg' : msg.msg,
 		});
@@ -22,21 +22,12 @@ var number_in_room = 0;
 var room_number = 0;
 var room_min_size = 2;
 var room_max_size = 2;
-var wait_rooms = new waiting_rooms(room_min_size, room_max_size);
+var room_object = require("./socket_rooms");
+var wait_rooms = new room_object(room_min_size, room_max_size);
 
 module.exports = function(io) {
 
-	//Notify users remaaining in room that user has disconnected
-	var user_diconnected = function(socket,msg){
-		var rooms = wait_rooms.find_room_by_socket_id(socket.id, rooms);
-		if (rooms.length > 0) {
-			io.to(rooms.pop()).emit('user_disconnected', {
-				'msg' : msg.msg
-			});
-		} else {// Send failure message
-
-		}
-	}
+	
 	
 	io.sockets.on('connection', function(socket) {
 		socket.emit('connection_status', "Connection Successful");// Send
@@ -45,9 +36,8 @@ module.exports = function(io) {
 		// successful
 		// connection
 
-		socket.on('disconnect', function(socket) {
-			console.log(socket.id);
-			user_diconnected(socket,{msg:"user disconnect"});
+		socket.on('disconnect', function() {
+			emit_new_message(socket,{msg:"user disconnect"},"user_disconnected");
 		});
 
 		// User wants to join a game
@@ -74,7 +64,8 @@ module.exports = function(io) {
 		});
 
 		socket.on('user_disconnecting', function(msg) {
-			user_diconnected(socket,msg);
+			emit_new_message(socket,msg.msg,"user_disconnected");
+			socket.disconnect();
 		});
 
 		socket.on('game_message', function(msg) {// Emit a game message

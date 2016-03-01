@@ -2,9 +2,9 @@
  * New node file
  */
 
+var uuid = require('node-uuid');
 
-
-function waiting_rooms(min_room_size, max_room_size) {
+module.exports = function waiting_rooms(min_room_size, max_room_size) {
 	this.room_waiting = [0];
 	this.number_in_room = 0;
 	this.add_to_room = function(user_socker) {

@@ -31,7 +31,8 @@
 				onUserJoin: null,//User joins lobby
 				onRecievePacket:null, //User recieves data packet
 				onGameStart:null,//Lobby is full, user can begin game
-				connectionStatus:null //Connection has been made successfully
+				connectionStatus:null, //Connection has been made successfully
+				onOtherUserDisconnect:null //Another user has disconnected from the game
 		};
 		
 		//Merge the objects together
@@ -59,6 +60,10 @@
 			
 			if(this._options.onGameStart!==null){
 				this.socket.on('game_start',this._options.onGameStart);
+			}
+			
+			if(this._options.onOtherUserDisconnect!==null){
+				this.socket.on('user_disconnected',this._options.onOtherUserDisconnect);
 			}
 			
 			

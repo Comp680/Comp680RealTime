@@ -26,6 +26,18 @@ var wait_rooms = new waiting_rooms(room_min_size, room_max_size);
 
 module.exports = function(io) {
 
+	//Notify users remaaining in room that user has disconnected
+	var user_diconnected = function(socket,msg){
+		var rooms = wait_rooms.find_room_by_socket_id(socket.id, rooms);
+		if (rooms.length > 0) {
+			io.to(rooms.pop()).emit('user_disconnected', {
+				'msg' : msg.msg
+			});
+		} else {// Send failure message
+
+		}
+	}
+	
 	io.sockets.on('connection', function(socket) {
 		socket.emit('connection_status', "Connection Successful");// Send
 		// information
@@ -34,7 +46,8 @@ module.exports = function(io) {
 		// connection
 
 		socket.on('disconnect', function(socket) {
-
+			console.log(socket.id);
+			user_diconnected(socket,{msg:"user disconnect"});
 		});
 
 		// User wants to join a game
@@ -61,19 +74,14 @@ module.exports = function(io) {
 		});
 
 		socket.on('user_disconnecting', function(msg) {
-			var rooms = wait_rooms.find_room_by_socket_id(socket.id, rooms);
-			if (rooms.length > 0) {
-				io.to(rooms.pop()).emit('user connect', {
-					'msg' : msg.msg
-				});
-			} else {// Send failure message
-
-			}
+			user_diconnected(socket,msg);
 		});
 
 		socket.on('game_message', function(msg) {// Emit a game message
 			emit_new_message(socket, msg.msg, 'game_update');
 		});
+		
+		
 
 	});
 };

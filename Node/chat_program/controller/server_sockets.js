@@ -2,6 +2,8 @@
  * New node file
  */
 
+var uuid = require('node-uuid');
+
 function emit_new_message(socket, msg, emit_to) {
 	var rooms = socket.adapter.rooms;
 	rooms = wait_rooms.find_room_by_socket_id(socket.id, rooms);
@@ -50,7 +52,7 @@ module.exports = function(io) {
 			});
 
 			if (room_info.full) {
-				io.to(socket.id).emit('game_start', {// Send message to user
+				io.to(room_num).emit('game_start', {// Send message to user
 					msg:"Game Start"
 				});
 

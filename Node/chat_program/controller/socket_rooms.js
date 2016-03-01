@@ -2,12 +2,14 @@
  * New node file
  */
 
+
+
 function waiting_rooms(min_room_size, max_room_size) {
 	this.room_waiting = [0];
 	this.number_in_room = 0;
 	this.add_to_room = function(user_socker) {
 		if(this.number_in_room >= max_room_size){
-			this.room_waiting[0]++;
+			this.room_waiting[0] = uuid.v1();
 			this.number_in_room = 0;
 		}
 		this.number_in_room++;

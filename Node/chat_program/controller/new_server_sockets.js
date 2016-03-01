@@ -2,6 +2,8 @@
  * New node file
  */
 
+var uuid = require('node-uuid');
+
 function emit_new_message(socket, msg, emit_to) {
 	var rooms = socket.adapter.rooms;
 	rooms = wait_rooms.find_room_by_socket_id(socket.id, rooms);
@@ -78,6 +80,8 @@ module.exports = function(io) {
 /**
  * New node file
  */
+
+
 
 function waiting_rooms(min_room_size, max_room_size) {
 	this.room_waiting = [0];

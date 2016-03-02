@@ -2,19 +2,22 @@
  * New node file
  */
 
-
-
 function emit_new_message(socket, msg, emit_to) {
 	var rooms = socket.adapter.rooms;
-	rooms = wait_rooms.find_room_by_socket_id(socket,socket.id, rooms);
-	if (typeof msg['for']!="undefined" && msg['for'].toLowerCase() == 'not_me') {
-		socket.broadcast.to(rooms[0]).emit(emit_to, {
-			'msg' : msg.msg,
-		});
+	rooms = wait_rooms.find_room_by_socket_id(socket, socket.id, rooms);
+	if (typeof msg['for'] != "undefined"
+			&& msg['for'].toLowerCase() == 'not_me') {
+		while (typeof rooms[rooms.length - 1] != 'undefined') {
+			socket.broadcast.to(rooms.pop()).emit(emit_to, {
+				'msg' : msg.msg,
+			});
+		}
 	} else {
-		socket.to(rooms[0]).emit(emit_to, {
-			'msg' : msg.msg,
-		});
+		while (typeof rooms[rooms.length - 1] != 'undefined') {
+			socket.to(rooms.pop()).emit(emit_to, {
+				'msg' : msg.msg,
+			});
+		}
 	}
 }
 
@@ -27,8 +30,6 @@ var wait_rooms = new room_object(room_min_size, room_max_size);
 
 module.exports = function(io) {
 
-	
-	
 	io.sockets.on('connection', function(socket) {
 		socket.emit('connection_status', "Connection Successful");// Send
 		// information
@@ -37,15 +38,17 @@ module.exports = function(io) {
 		// connection
 
 		socket.on('disconnect', function() {
-			
+
 		});
-		
-		//Overwrite the default socket connection for on-close
-		//Allows operations to be performed before the object is deleted
-		socket.onclose = function(reason){
-		    //emit to rooms here
-			emit_new_message(socket,{msg:"user disconnect"},"user_disconnected");
-		    Object.getPrototypeOf(this).onclose.call(this,reason);
+
+		// Overwrite the default socket connection for on-close
+		// Allows operations to be performed before the object is deleted
+		socket.onclose = function(reason) {
+			// emit to rooms here
+			emit_new_message(socket, {
+				msg : "user disconnect"
+			}, "user_disconnected");
+			Object.getPrototypeOf(this).onclose.call(this, reason);
 		}
 
 		// User wants to join a game
@@ -64,7 +67,7 @@ module.exports = function(io) {
 
 			if (room_info.full) {
 				io.to(room_num).emit('game_start', {// Send message to user
-					msg:"Game Start"
+					msg : "Game Start"
 				});
 
 			}
@@ -72,15 +75,13 @@ module.exports = function(io) {
 		});
 
 		socket.on('user_disconnecting', function(msg) {
-			emit_new_message(socket,msg.msg,"user_disconnected");
+			emit_new_message(socket, msg.msg, "user_disconnected");
 			socket.disconnect();
 		});
 
 		socket.on('game_message', function(msg) {// Emit a game message
 			emit_new_message(socket, msg.msg, 'game_update');
 		});
-		
-		
 
 	});
 };

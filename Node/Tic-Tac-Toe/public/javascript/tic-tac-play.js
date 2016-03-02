@@ -192,7 +192,7 @@ $(document)
 					
 					//A user other than the current user has disconnected
 					function onOtherUserDisconnection(msg){
-						alert(msg);
+						alert(msg.msg);
 					}
 
 				});

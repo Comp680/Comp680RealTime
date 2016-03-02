@@ -5,7 +5,7 @@
 var uuid = require('node-uuid');
 
 module.exports = function waiting_rooms(min_room_size, max_room_size) {
-	this.room_waiting = [0];
+	this.room_waiting = [uuid.v1()];
 	this.number_in_room = 0;
 	this.add_to_room = function(user_socker) {
 		if(this.number_in_room >= max_room_size){
@@ -17,10 +17,12 @@ module.exports = function waiting_rooms(min_room_size, max_room_size) {
 		
 	}
 
-	this.find_room_by_socket_id = function(socket_id, rooms) {// Find the room
+	this.find_room_by_socket_id = function(socket,socket_id, rooms) {// Find the room
 																// the user
 																// resides in
-		var return_value = [];
+		console.log(socket.adapter.sids[socket_id]);
+		return Object.keys(socket.adapter.sids[socket_id]);
+		/*var return_value = [];
 		return_value.push(-1);
 		for ( var key in rooms) {
 			if (typeof rooms[key] === 'object') {
@@ -39,7 +41,7 @@ module.exports = function waiting_rooms(min_room_size, max_room_size) {
 
 			}
 		}
-		return return_value;
+		return return_value;*/
 
 	}
 

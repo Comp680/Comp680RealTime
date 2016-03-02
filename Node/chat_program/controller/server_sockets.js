@@ -6,13 +6,13 @@
 
 function emit_new_message(socket, msg, emit_to) {
 	var rooms = socket.adapter.rooms;
-	rooms = wait_rooms.find_room_by_socket_id(socket.id, rooms);
+	rooms = wait_rooms.find_room_by_socket_id(socket,socket.id, rooms);
 	if (typeof msg['for']!="undefined" && msg['for'].toLowerCase() == 'not_me') {
-		socket.broadcast.to(rooms.pop()).emit(emit_to, {
+		socket.broadcast.to(rooms[0]).emit(emit_to, {
 			'msg' : msg.msg,
 		});
 	} else {
-		socket.to(rooms.pop()).emit(emit_to, {
+		socket.to(rooms[0]).emit(emit_to, {
 			'msg' : msg.msg,
 		});
 	}
@@ -37,8 +37,16 @@ module.exports = function(io) {
 		// connection
 
 		socket.on('disconnect', function() {
-			emit_new_message(socket,{msg:"user disconnect"},"user_disconnected");
+			
 		});
+		
+		//Overwrite the default socket connection for on-close
+		//Allows operations to be performed before the object is deleted
+		socket.onclose = function(reason){
+		    //emit to rooms here
+			emit_new_message(socket,{msg:"user disconnect"},"user_disconnected");
+		    Object.getPrototypeOf(this).onclose.call(this,reason);
+		}
 
 		// User wants to join a game
 		socket.on('join_game', function(msg) {

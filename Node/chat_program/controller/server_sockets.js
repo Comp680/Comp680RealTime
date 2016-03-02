@@ -38,7 +38,7 @@ module.exports = function(io) {
 		// connection
 
 		socket.on('disconnect', function() {
-
+			
 		});
 
 		// Overwrite the default socket connection for on-close
@@ -56,6 +56,7 @@ module.exports = function(io) {
 			var room_info = wait_rooms.add_to_room(socket);
 			var room_num = room_info.room;
 
+			
 			socket.join(room_num);
 
 			io.to(socket.id).emit('user_join', {// Send message to user

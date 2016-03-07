@@ -15,8 +15,9 @@ $(document)
 															// data packet
 						onGameStart : gameStart,// Lobby is full, user can begin
 						// game
-						connectionStatus : null
+						connectionStatus : change_communication,
 					// Connection has been made successfully
+						onOtherUserDisconnect: onOtherUserDisconnection
 					};
 
 					function userJoin(msg) {
@@ -28,6 +29,13 @@ $(document)
 						// second player
 					}
 
+					
+					//Show the user green when connected, red when not
+					function change_communication(msg){
+						$(".circle").toggleClass("connected");
+						$(".circle").toggleClass("disconnected");
+					}
+					
 					function gameStart(msg) {
 						alert("Game Start");
 						if (user_letter == "X") {
@@ -35,7 +43,7 @@ $(document)
 						}
 					}
 
-					var game = $.fn.ClientGame("http://localhost:3000", 3,
+					var game = $.fn.ClientGame("localhost:3000", 3,
 							options);
 					waiting_for_user = true;
 					game.connectToServer();
@@ -180,6 +188,11 @@ $(document)
 						}
 						waiting_for_user = false;
 
+					}
+					
+					//A user other than the current user has disconnected
+					function onOtherUserDisconnection(msg){
+						alert(msg.msg);
 					}
 
 				});

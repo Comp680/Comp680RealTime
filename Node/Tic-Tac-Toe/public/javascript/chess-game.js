@@ -19,7 +19,12 @@ online_chess.connectToServer();
 online_chess.joinGame("Player Joined");
 
 function userJoin(msg){
-	if(msg.player_number === 1){
+	
+}
+
+function gameStart(message){
+	game_started = true;
+	if(message.msg.player === 1){
 		player_color = 'w';
 		player_color_regex = /^b/;
 		player_color_dis.html("White");
@@ -28,11 +33,7 @@ function userJoin(msg){
 		player_color_regex = /^w/;
 		player_color_dis.html("Black");
 	}
-}
-
-function gameStart(msg){
-	game_started = true;
-	alert(msg.msg);
+	alert("Game Start");
 }
 
 function connectionSuccess(msg){

@@ -9,15 +9,7 @@
 (function($) {
 	var version = '0.0.1';
 
-	function create_message(msg) {
-		
-		return {
-			'msg' : msg,
-			'version_num' : version,
-			'for' : 'not_me'
-		};
-
-	}
+	
 
 	/**
 	 * Contains everything required to create an connection to the server
@@ -50,6 +42,22 @@
 	 */
 	$.fn.ClientGame = function(server, game_id, options) {
 
+		/**
+		 * Creates the message for the backend server
+		 * @access private
+		 * @param {string|JSON} msg - The message which will be added to the server data 
+		 */
+		function create_message(msg) {
+			
+			return {
+				'msg' : msg,
+				'version_num' : version,
+				'for' : 'not_me',
+				'game_id': game_id
+			};
+
+		}
+		
 		if (server == null) {
 			throw new error(
 					"An ip address/web domain is required. Please enter a server address.");

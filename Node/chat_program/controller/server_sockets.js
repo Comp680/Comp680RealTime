@@ -1,15 +1,23 @@
-/**
- * New node file
- */
-
 var number_in_room = 0;
 var room_number = 0;
 var room_min_size = 2;
 var room_max_size = 2;
 var room_object = require("./socket_rooms");
 var wait_rooms = new room_object(room_min_size, room_max_size);
+/**
+ * Server Object
+* @external "http.Server"
+* @see {@link https://nodejs.org/api/http.html#http_class_http_server}
+**/
 
-module.exports = function(io) {
+
+
+/**
+	 * Emit a message to multiple users
+	 * @param {external:http.Server} io - Socket.io object
+	 * @class
+	 */
+ function create_socket(io) {
 	/**
 	 * Emit a message to multiple users
 	 * @param {string} socket_id - The id of the client socket to whom the message will be sent
@@ -128,3 +136,5 @@ module.exports = function(io) {
 
 	});
 };
+
+module.exports = create_socket;

@@ -28,6 +28,8 @@
     "grunt-contrib-concat":"*",
     "grunt-contrib-copy":"*",
     "grunt-contrib-clean":"*",
-	"grunt-contrib-cssmin":"*"
+	"grunt-contrib-cssmin":"*",
+	"jsdoc":"*",
+	"ink-docstrap":"*"
   }
 }

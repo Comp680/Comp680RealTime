@@ -4,6 +4,8 @@
         "dictionaries": ["jsdoc","closure"]
     },
     "source": {
+		"include":["public"],
+		"exclude":[],
         "includePattern": ".+\\.js(doc)?$",
         "excludePattern": "(^|\\/|\\\\)_"
     },
@@ -11,5 +13,10 @@
     "templates": {
         "cleverLinks": false,
         "monospaceLinks": false
-    }
+    },
+	"opts":{
+	"template":"node_modules/ink-docstrap/template",
+	"destination": "help_files",
+        "recurse": true
+	}
 }

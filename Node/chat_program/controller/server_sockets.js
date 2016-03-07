@@ -10,7 +10,12 @@ var room_object = require("./socket_rooms");
 var wait_rooms = new room_object(room_min_size, room_max_size);
 
 module.exports = function(io) {
-
+	/**
+	 * Emit a message to multiple users
+	 * @param {string} socket_id - The id of the client socket to whom the message will be sent
+	 * @param {JSON|string} msg - The message to send to the client
+	 * @param {string} emit_to - The location to emit the message to
+	 */
 	function emit_new_message(socket, msg, emit_to) {
 		var rooms = socket.adapter.rooms;
 		rooms = wait_rooms.find_room_by_socket_id(socket, socket.id, rooms);

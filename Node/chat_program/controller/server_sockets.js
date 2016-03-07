@@ -23,6 +23,10 @@ var wait_rooms = new room_object(room_min_size, room_max_size);
 	 * @param {string} socket_id - The id of the client socket to whom the message will be sent
 	 * @param {JSON|string} msg - The message to send to the client
 	 * @param {string} emit_to - The location to emit the message to
+	 * @example <caption>Example of creating a new message</caption>
+	 * emit_new_message(socket,{"msg":msg, for:"not_me"},"test");
+	 * 
+	 * @access private
 	 */
 	function emit_new_message(socket, msg, emit_to) {
 		var rooms = socket.adapter.rooms;

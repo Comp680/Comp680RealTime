@@ -2,24 +2,7 @@
  * New node file
  */
 
-function emit_new_message(socket, msg, emit_to) {
-	var rooms = socket.adapter.rooms;
-	rooms = wait_rooms.find_room_by_socket_id(socket, socket.id, rooms);
-	if (typeof msg['for'] != "undefined"
-			&& msg['for'].toLowerCase() == 'not_me') {
-		while (typeof rooms[rooms.length - 1] != 'undefined') {
-			socket.broadcast.to(rooms.pop()).emit(emit_to, {
-				'msg' : msg.msg,
-			});
-		}
-	} else {
-		while (typeof rooms[rooms.length - 1] != 'undefined') {
-			socket.to(rooms.pop()).emit(emit_to, {
-				'msg' : msg.msg,
-			});
-		}
-	}
-}
+
 
 var number_in_room = 0;
 var room_number = 0;
@@ -30,15 +13,38 @@ var wait_rooms = new room_object(room_min_size, room_max_size);
 
 module.exports = function(io) {
 
+	
+	function emit_new_message(socket, msg, emit_to) {
+		var rooms = socket.adapter.rooms;
+		rooms = wait_rooms.find_room_by_socket_id(socket, socket.id, rooms);
+		if (typeof msg['for'] != "undefined"
+				&& msg['for'].toLowerCase() === 'not_me') {
+			while (rooms.length > 0) {
+				socket.broadcast.to(rooms.pop()).emit(emit_to, {
+					'msg' : msg.msg,
+				});
+			}
+		} else {
+			while (rooms.length > 0) {
+					io.to(rooms.pop()).emit(emit_to, {
+						'msg' : msg.msg,
+					});
+			}
+		}
+	}
+	
+	
 	io.sockets.on('connection', function(socket) {
-		socket.emit('connection_status', {msg:"Connection Successful"});// Send
+		socket.emit('connection_status', {
+			msg : "Connection Successful"
+		});// Send
 		// information
 		// about
 		// successful
 		// connection
 
 		socket.on('disconnect', function() {
-			
+
 		});
 
 		// Overwrite the default socket connection for on-close
@@ -56,7 +62,6 @@ module.exports = function(io) {
 			var room_info = wait_rooms.add_to_room(socket);
 			var room_num = room_info.room;
 
-			
 			socket.join(room_num);
 
 			io.to(socket.id).emit('you_join', {// Send message to user
@@ -65,13 +70,17 @@ module.exports = function(io) {
 				'room_number' : room_num,
 				'player_number' : room_info.user_number
 			});
-			
-			emit_new_message(socket,{'msg':msg.msg,'for':'not_me'},"user_join");
+
+			emit_new_message(socket, {
+				'msg' : msg.msg,
+				'for' : 'not_me'
+			}, "user_join");
 
 			if (room_info.full) {
-				emit_new_message(socket,{'msg':'Game Start'},"game_start");
+				emit_new_message(socket, {
+					'msg' : 'Game Start'
+				}, "game_start");
 			}
-			
 
 		});
 

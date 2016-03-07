@@ -21,7 +21,8 @@ module.exports = function waiting_rooms(min_room_size, max_room_size) {
 	this.find_room_by_socket_id = function(socket,socket_id,rooms) {// Find the room
 																// the user
 																// resides in
-		return Object.keys(socket.adapter.sids[socket_id]);
+		var room_temp = socket.adapter.sids[socket_id];
+		return Object.keys(room_temp);
 
 	}
 

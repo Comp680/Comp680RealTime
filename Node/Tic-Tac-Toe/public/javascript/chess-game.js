@@ -1,7 +1,7 @@
 /**
  * New node file
  */
-var board, game = new Chess(), statusEl = $('#status'), fenEl = $('#fen'), pgnEl = $('#pgn'), options = {
+var board, game = new Chess(), statusEl = $('#status'), fenEl = $('#fen'), pgnEl = $('#pgn'),player_color_dis = $("#piece_color"), options = {
 	onThisClientJoinGame : userJoin,// User joins lobby
 	onRecievePacket : updateOnlineBoard, // User recieves data packet
 	onGameStart : gameStart,// Lobby is full, user can begin game
@@ -9,7 +9,8 @@ var board, game = new Chess(), statusEl = $('#status'), fenEl = $('#fen'), pgnEl
 	onOtherUserDisconnect : null
 };
 
-var player_color;
+var player_color,player_color_regex,
+game_started=false;
 
 online_chess = $.fn.ClientGame("localhost:3000", 3, options);
 
@@ -20,17 +21,23 @@ online_chess.joinGame("Player Joined");
 function userJoin(msg){
 	if(msg.player_number === 1){
 		player_color = 'w';
+		player_color_regex = /^b/;
+		player_color_dis.html("White");
 	}else{
 		player_color = 'b';
+		player_color_regex = /^w/;
+		player_color_dis.html("Black");
 	}
 }
 
 function gameStart(msg){
+	game_started = true;
 	alert(msg.msg);
 }
 
 function connectionSuccess(msg){
-	alert(msg.msg);
+	$(".circle").toggleClass("connected");
+	$(".circle").toggleClass("disconnected");
 }
 
 //Update the users board from the other persons game
@@ -48,8 +55,11 @@ function updateOnlineBoard(message) {
 // do not pick up pieces if the game is over
 // only pick up pieces for the side to move
 var onDragStart = function(source, piece, position, orientation) {
-	if (game.game_over() === true
-			|| (game.turn() === player_color && piece.search(new RegExp("/^",player_color,"/")) !== -1)) {
+	var temp = piece.search(player_color_regex);
+	if (game.game_over() === true 
+			|| !game_started
+			|| game.turn() !== player_color
+			|| (game.turn() === player_color && piece.search(player_color_regex) !== -1)) {
 		return false;
 	}
 };

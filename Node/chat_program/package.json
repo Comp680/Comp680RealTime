@@ -17,7 +17,8 @@
     "socket.io": "*",
     "socket.io-client": "*",
     "http": "*",
-    "queue": "*"
+    "queue": "*",
+    "node-uuid":"*"
   },
   "devDependencies": {
     "grunt": "^0.4.5",
@@ -27,6 +28,8 @@
     "grunt-contrib-concat":"*",
     "grunt-contrib-copy":"*",
     "grunt-contrib-clean":"*",
-	"grunt-contrib-cssmin":"*"
+	"grunt-contrib-cssmin":"*",
+	"jsdoc":"*",
+	"ink-docstrap":"*"
   }
 }

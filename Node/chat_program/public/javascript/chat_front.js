@@ -1,7 +1,3 @@
-/**
- * New node file
- */
-
 var socket = io.connect();//Create a socket
 var room;
 //Send a message

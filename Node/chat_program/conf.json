@@ -1,0 +1,22 @@
+{
+    "tags": {
+        "allowUnknownTags": true,
+        "dictionaries": ["jsdoc","closure"]
+    },
+    "source": {
+		"include":["public/","controller/"],
+		"exclude":["node_modules","Gruntfile.js","build"],
+        "includePattern": ".+\\.js(doc)?$",
+        "excludePattern": "(^|\\/|\\\\)_"
+    },
+    "plugins": [],
+    "templates": {
+        "cleverLinks": false,
+        "monospaceLinks": false
+    },
+	"opts":{
+	"template":"node_modules/ink-docstrap/template",
+	"destination": "help_files",
+        "recurse": true
+	}
+}

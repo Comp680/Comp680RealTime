@@ -34,7 +34,7 @@ server.on('listening', onListening);
  */
 
 var io = require('socket.io')(server);
-var chat_sockets = require('../controller/new_server_sockets');
+var chat_sockets = require('../controller/server_sockets');
 chat_sockets(io);//Open sockets using opening
 
 /**

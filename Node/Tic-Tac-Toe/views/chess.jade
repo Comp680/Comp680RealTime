@@ -1,0 +1,21 @@
+extends chess_head
+
+block content
+	div(id="board" style="width: 400px")
+	p
+		| "Status:" 
+		span(id="status")
+	p
+		| "FEN:" 
+		span(id="fen")
+	p
+		| "PGN:" 
+		span(id="pgn")
+	script(type="text/javascript" src="http://code.jquery.com/jquery-1.11.1.js")
+	script(type="text/javascript" src="/modules/socket.io/node_modules/socket.io-client/socket.io.js")
+	script(type="text/javascript" src="/javascript/clientFunctions.js")
+	script(type="text/javascript" src="/javascript/chessboard-0.3.0.js")
+	script(type="text/javascript" src="/javascript/chess.js")
+	script(type="text/javascript" src="/javascript/chess-game.js")
+	
+			

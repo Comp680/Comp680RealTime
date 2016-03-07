@@ -43,7 +43,7 @@ $(document)
 						}
 					}
 
-					var game = $.fn.ClientGame("54.183.211.102:80", 3,
+					var game = $.fn.ClientGame("localhost:3000", 3,
 							options);
 					waiting_for_user = true;
 					game.connectToServer();

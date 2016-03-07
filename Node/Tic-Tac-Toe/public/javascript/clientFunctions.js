@@ -10,10 +10,11 @@
 	var version = '0.0.1';
 
 	function create_message(msg) {
-
+		
 		return {
-			msg : msg,
-			version_num : version
+			'msg' : msg,
+			'version_num' : version,
+			'for' : 'not_me'
 		};
 
 	}
@@ -39,6 +40,9 @@
 	 *            successfully
 	 * @param {function}
 	 *            [options.onOtherUserDisconnect] - Another user has
+	 *            disconnected from the game
+	 * @param {function}
+	 *            [options.onThisClientJoinGame] - Another user has
 	 *            disconnected from the game
 	 *  @exception Missing IP Address
 	 *  @exception Missing Game ID error
@@ -66,7 +70,8 @@
 			onRecievePacket : null, // User recieves data packet
 			onGameStart : null,// Lobby is full, user can begin game
 			connectionStatus : null, // Connection has been made successfully
-			onOtherUserDisconnect : null
+			onOtherUserDisconnect : null, //On any other user disconnect
+			onThisClientJoinGame: null //On joining a game
 		// Another user has disconnected from the game
 		};
 
@@ -104,6 +109,13 @@
 				this.socket.on('user_disconnected',
 						this._options.onOtherUserDisconnect);
 			}
+			
+			if(this._options.onThisClientJoinGame !== null) {
+				this.socket.on('you_join',
+						this._options.onThisClientJoinGame);
+				
+			}
+			
 
 		}
 

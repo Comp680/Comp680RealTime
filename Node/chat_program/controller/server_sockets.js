@@ -31,7 +31,7 @@ var wait_rooms = new room_object(room_min_size, room_max_size);
 module.exports = function(io) {
 
 	io.sockets.on('connection', function(socket) {
-		socket.emit('connection_status', "Connection Successful");// Send
+		socket.emit('connection_status', {msg:"Connection Successful"});// Send
 		// information
 		// about
 		// successful
@@ -59,29 +59,29 @@ module.exports = function(io) {
 			
 			socket.join(room_num);
 
-			io.to(socket.id).emit('user_join', {// Send message to user
+			io.to(socket.id).emit('you_join', {// Send message to user
 				// based on their room
 				'msg' : msg.msg,
 				'room_number' : room_num,
 				'player_number' : room_info.user_number
 			});
+			
+			emit_new_message(socket,{'msg':msg.msg,'for':'not_me'},"user_join");
 
 			if (room_info.full) {
-				io.to(room_num).emit('game_start', {// Send message to user
-					msg : "Game Start"
-				});
-
+				emit_new_message(socket,{'msg':'Game Start'},"game_start");
 			}
+			
 
 		});
 
 		socket.on('user_disconnecting', function(msg) {
-			emit_new_message(socket, msg.msg, "user_disconnected");
+			emit_new_message(socket, msg, "user_disconnected");
 			socket.disconnect();
 		});
 
 		socket.on('game_message', function(msg) {// Emit a game message
-			emit_new_message(socket, msg.msg, 'game_update');
+			emit_new_message(socket, msg, 'game_update');
 		});
 
 	});

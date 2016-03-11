@@ -3,7 +3,7 @@ var board, game = new Chess(), statusEl = $('#status'), fenEl = $('#fen'), pgnEl
 	onRecievePacket : updateOnlineBoard, // User recieves data packet
 	onGameStart : gameStart,// Lobby is full, user can begin game
 	connectionStatus : connectionSuccess, // Connection has been made successfully
-	onOtherUserDisconnect : null
+	onOtherUserDisconnect : OnUserDisconnect //Other player has disconnected
 };
 
 var player_color,player_color_regex,
@@ -16,6 +16,20 @@ online_chess.connectToServer();
 online_chess.joinGame("Player Joined");
 
 function userJoin(msg){
+	
+}
+
+function OnUserDisconnect(msg){
+	if (confirm('Oppenent Disconnected. Would you like to play a new game?')) {
+		game_started = false;
+		board = ChessBoard('board', cfg);
+		game = new Chess();
+		update_screen_values();
+		
+		online_chess.joinGame("Player Joined");
+	} else {
+	    
+	}
 	
 }
 
@@ -43,12 +57,16 @@ function updateOnlineBoard(message) {
 	//Reload the board
 	board.position(message.msg.board);
 	game.load(message.msg.board);
+	update_screen_values();
+};
+
+function update_screen_values(){
 	var status = check_game_status();
 
 	statusEl.html(status);
 	fenEl.html(game.fen());
 	pgnEl.html(game.pgn());
-};
+}
 
 // do not pick up pieces if the game is over
 // only pick up pieces for the side to move

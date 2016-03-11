@@ -12,42 +12,39 @@ $(document)
 					var options = {
 						onUserJoin : userJoin,// User joins lobby
 						onRecievePacket : update_board_msg, // User recieves
-															// data packet
+						// data packet
 						onGameStart : gameStart,// Lobby is full, user can begin
 						// game
 						connectionStatus : change_communication,
-					// Connection has been made successfully
-						onOtherUserDisconnect: onOtherUserDisconnection
+						// Connection has been made successfully
+						onOtherUserDisconnect : onOtherUserDisconnection
 					};
 
 					function userJoin(msg) {
-						user_letter = msg.player_number == 1 ? "X" : "O";// Find
-																			// out
-																			// if
-																			// the												// user
-						// is the first or
-						// second player
+
 					}
 
-					
-					//Show the user green when connected, red when not
-					function change_communication(msg){
+					// Show the user green when connected, red when not
+					function change_communication(msg) {
 						$(".circle").toggleClass("connected");
 						$(".circle").toggleClass("disconnected");
 					}
-					
+
 					function gameStart(msg) {
 						alert("Game Start");
+						user_letter = msg.msg.player === 1 ? "X" : "O";
 						if (user_letter == "X") {
 							waiting_for_user = false;
 						}
+						$("#Player_Letter").html(user_letter);
 					}
 
-					var game = $.fn.ClientGame("localhost:3000", 3,
-							options);
+					var game = $.fn.ClientGame("localhost:3000", 4, options);
 					waiting_for_user = true;
 					game.connectToServer();
-					game.joinGame({'msg':"HelloGame"});
+					game.joinGame({
+						'msg' : "HelloGame"
+					});
 					$(".tic-tac-board td").on('click', function() {
 						if (!waiting_for_user) {
 							update_board($(this));// Update the board
@@ -56,9 +53,10 @@ $(document)
 					});
 
 					var reset_board = function() {
-						$.each($(".tic-tac-board td"), function(val, index) {// Create
+						$.each($(".tic-tac-board td"), function(index,val) {// Create
 							$(val).text("");// Set the text to empty
 						});
+						waiting_for_user =true;
 					};
 
 					// Update the board
@@ -163,7 +161,7 @@ $(document)
 						game.passGameData({
 							'msg' : array_list,
 							'for' : "not_me",
-							'win' : "win"
+							'win' : win
 						});
 
 						waiting_for_user = true;
@@ -180,19 +178,25 @@ $(document)
 						// is given
 						var board_pos = $(".tic-tac-board td");
 						for (var i = 0; i < board_pos.length; i++) {
-							$(board_pos[i]).text(msg.msg[i]);
+							$(board_pos[i]).text(msg.msg.msg[i]);
 						}
-						var win = game_finished(msg.msg);
+						var win = game_finished(msg.msg.msg);
 						if (win) {
 							alert("Lost");
 						}
 						waiting_for_user = false;
 
 					}
-					
-					//A user other than the current user has disconnected
-					function onOtherUserDisconnection(msg){
-						alert(msg.msg);
+
+					// A user other than the current user has disconnected
+					function onOtherUserDisconnection(msg) {
+						if (confirm('Oppenent Disconnected. Would you like to play a new game?')) {
+							reset_board();
+							game.joinGame("Player Joined");
+						} else {
+						    
+						}
+						
 					}
 
 				});

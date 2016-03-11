@@ -101,6 +101,7 @@ function waiting_rooms(min_room_size, max_room_size) {
 					if (rooms[element.id].length < min_room_size) {
 						if (rooms[element.id].length + 1 >= min_room_size) {
 							element.ready = true;
+							delete array[index];
 						}
 						return element;
 					}

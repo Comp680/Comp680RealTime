@@ -17,6 +17,7 @@
 	"opts":{
 	"template":"node_modules/ink-docstrap/template",
 	"destination": "help_files",
-        "recurse": true
+        "recurse": true,
+        "private":true
 	}
 }

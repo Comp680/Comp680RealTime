@@ -96,29 +96,63 @@
 			this.socket = io.connect(server);// Create a socket
 
 			if (this._options.connectionStatus !== null) {
+				/**
+				 * A user has joined the game the current user is in
+				 * @event $.fn.ClientGame#user_join
+				 * @property msg {*} - A message from the server stating the users connection status
+				 */
 				this.socket.on('connection_status',
 						this._options.connectionStatus);
 			}
 
 			if (this._options.onUserJoin !== null) {// Create callback for user
 													// join
+				/**
+				 * A user has joined the game the current user is in
+				 * @event $.fn.ClientGame#user_join
+				 * @property msg {*} - The message sent by the client at join
+				 */
 				this.socket.on('user_join', this._options.onUserJoin);
 			}
 
 			if (this._options.onRecievePacket !== null) {
+				/**
+				 * A message containing information about the current game has been received
+				 * @event $.fn.ClientGame#game_update
+				 * @type {object}
+				 * @property msg {*} - The message sent another user
+				 */
 				this.socket.on('game_update', this._options.onRecievePacket);
 			}
 
 			if (this._options.onGameStart !== null) {
+				/**
+				 * A user has joined the game the current user is in
+				 * @event $.fn.ClientGame#game_start
+				 * @type {object}
+				 * @property {*} msg - A message the user has set as default
+				 * @property {number} player - The player's number in the game
+				 */
 				this.socket.on('game_start', this._options.onGameStart);
 			}
 
 			if (this._options.onOtherUserDisconnect !== null) {
+				/**
+				 * A user has joined the game the current user is in
+				 * @event $.fn.ClientGame#user_disconnected
+				 * @property msg {*} - The message sent by the client at join
+				 */
 				this.socket.on('user_disconnected',
 						this._options.onOtherUserDisconnect);
 			}
 			
 			if(this._options.onThisClientJoinGame !== null) {
+				/**
+				 * A user has joined the game the current user is in
+				 * @event $.fn.ClientGame#you_join
+				 * @property {*} msg - Message sent by the user
+				 * @property {number} player - the number of the player
+				 */
 				this.socket.on('you_join',
 						this._options.onThisClientJoinGame);
 				
@@ -134,8 +168,14 @@
 		 * @param {JSON|string}
 		 *            msg - the json object containing information to send to
 		 *            other users
+		 * @fires $.fn.ClientGame#user_disconnecting
 		 */
 		this.disconnectFromServer = function(msg) {
+			/**
+			@event $.fn.ClientGame#user_disconnecting
+			@type {object}
+			@property msg - The message of the user
+			*/
 			this.socket.emit("user_disconnecting", create_message(msg));
 			window.clearTimeout(this.timeout);
 			// delete socket;
@@ -149,9 +189,14 @@
 		 * @param {JSON|string}
 		 *            join_msg - the json object containing information to send
 		 *            to other users
-		 * 
+		 * @fires $.fn.ClientGame#join_game
 		 */
 		this.joinGame = function(join_msg) {
+			/**
+			@event $.fn.ClientGame#join_game
+			@type {object}
+			@property msg - The message of the user
+			*/
 			this.socket.emit("join_game", create_message(join_msg));
 
 		}
@@ -174,8 +219,14 @@
 		 * @param {JSON|string}
 		 *            msg - the json object containing information to send to
 		 *            other users
+		 * @fires $.fn.ClientGame#game_message
 		 */
 		this.passGameData = function(msg) {
+			/**
+			@event $.fn.ClientGame#game_message
+			@type {object}
+			@property msg - The message of the user
+			*/
 			this.socket.emit("game_message", create_message(msg));
 		}
 

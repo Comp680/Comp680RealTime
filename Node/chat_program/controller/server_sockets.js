@@ -62,7 +62,7 @@ var wait_rooms = new room_object(room_min_size, room_max_size);
 	 * On Connection Event - Create the socket for the request 
 	 * @type {object}
 	 * @private
-	 * @event io.socket#connection
+	 * @event io.sockets#connection
 	 */
 	io.sockets.on('connection', function(socket) {
 		socket.emit('connection_status', {
@@ -108,12 +108,15 @@ var wait_rooms = new room_object(room_min_size, room_max_size);
 			 * Sends a message to the client that they have successfully joined a game
 			 * Includes the number player they are in the room
 			 * @event create_socket#you_join
-			 * @private
+			 * @type {object}
+			 * @property {*} msg - Message sent by the user
+			 * @property {number} player - the number of the player
+			 * @private 
 			 */
 			io.to(socket.id).emit('you_join', {// Send message to user
 				// based on their room
 				'msg' : msg.msg,
-				'player_number' : room_info.user_number
+				'player' : room_info.user_number
 			});
 
 			//Emit message to other users of a new client joining
@@ -151,6 +154,9 @@ var wait_rooms = new room_object(room_min_size, room_max_size);
 				/**
 				 * Sends messages to users that a game has started
 				 * @event socket#game_start
+				 * @type {object}
+				 * @property {*} msg - A message the user has set as default
+				 * @property {number} player - The player's number in the game
 				 * @private
 				 */
 				single_emit_new_message(element, {

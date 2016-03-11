@@ -38,6 +38,13 @@
 			</li>
 			
 			<li class="dropdown">
+				<a href="events.list.html" class="dropdown-toggle" data-toggle="dropdown">Events<b class="caret"></b></a>
+				<ul class="dropdown-menu ">
+					<li><a href="create_socket.html#event:disconnect">create_socket#event:disconnect</a></li><li><a href="create_socket.html#event:game_update">create_socket#event:game_update</a></li><li><a href="create_socket.html#event:join_game">create_socket#event:join_game</a></li><li><a href="create_socket.html#event:user_diconnecting">create_socket#event:user_diconnecting</a></li><li><a href="create_socket.html#event:user_disconnected">create_socket#event:user_disconnected</a></li><li><a href="create_socket.html#event:user_join">create_socket#event:user_join</a></li><li><a href="create_socket.html#event:user_message">create_socket#event:user_message</a></li><li><a href="create_socket.html#event:you_join">create_socket#event:you_join</a></li><li><a href="io.socket.html#event:connection">io.socket#event:connection</a></li><li><a href="socket.html#event:game_start">socket#event:game_start</a></li>
+				</ul>
+			</li>
+			
+			<li class="dropdown">
 				<a href="externals.list.html" class="dropdown-toggle" data-toggle="dropdown">Externals<b class="caret"></b></a>
 				<ul class="dropdown-menu ">
 					<li><a href="external-_http.Server_.html">http.Server</a></li>
@@ -162,6 +169,813 @@
     
 
     
+        <h3 class="subsection-title">Events</h3>
+
+        <dl>
+            
+<hr>
+<dt>
+    <h4 class="name" id="event:disconnect">disconnect</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Override the default socket connection for on-close.Allows operations to be performed before the object is deleted
+    </div>
+    
+
+    
+
+    
+
+    
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="event:game_update">game_update</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Send information from one client to all other connected clients
+    </div>
+    
+
+    
+
+    
+
+    
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="event:join_game">join_game</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Client has requested to join a game
+    </div>
+    
+
+    
+
+    
+
+    
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+    <h5>Fires:</h5>
+    <ul>
+        <li>io#event:you_join</li>
+    
+        <li><a href="create_socket.html#event:user_join">create_socket#event:user_join</a></li>
+    </ul>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="event:user_diconnecting">user_diconnecting</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Disconnects a user from the socket
+    </div>
+    
+
+    
+
+    
+
+    
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+    <h5>Fires:</h5>
+    <ul>
+        <li><a href="create_socket.html#event:user_disconnected">create_socket#event:user_disconnected</a></li>
+    </ul>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="event:user_disconnected">user_disconnected</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Sends message to all users who are still connected that another user has disconnected
+    </div>
+    
+
+    
+
+    
+
+    
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="event:user_join">user_join</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Sends a message to all others users in a room that a new user has joined
+    </div>
+    
+
+    
+
+    
+
+    
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="event:user_message">user_message</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Pass a message to whoever is meant to recieve it
+    </div>
+    
+
+    
+
+    
+
+    
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+    <h5>Fires:</h5>
+    <ul>
+        <li><a href="create_socket.html#event:game_update">create_socket#event:game_update</a></li>
+    </ul>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="event:you_join">you_join</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Sends a message to the client that they have successfully joined a gameIncludes the number player they are in the room
+    </div>
+    
+
+    
+
+    
+
+    
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="event:connection">connection</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        On Connection Event - Create the socket for the request
+    </div>
+    
+
+    
+
+    
+        <h5>Type: 
+<span class="param-type">object</span>
+
+
+</h5>
+    
+
+    
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="event:game_start">game_start</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Sends messages to users that a game has started
+    </div>
+    
+
+    
+
+    
+
+    
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dd>
+
+        </dl>
+    
 </article>
 
 </section>
@@ -204,7 +1018,7 @@
 <span class="jsdoc-message">
 	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a>
 	
-		on 2016-03-07T15:43:51-08:00
+		on 2016-03-11T12:04:26-08:00
 	
 	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
 </span>

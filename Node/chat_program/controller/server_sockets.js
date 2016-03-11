@@ -19,7 +19,7 @@ var wait_rooms = new room_object(room_min_size, room_max_size);
 	 */
  function create_socket(io) {
 	/**
-	 * Emit a message to multiple users
+	 * Emit a message to multiple users with a specified send format
 	 * @param {string} socket_id - The id of the client socket to whom the message will be sent
 	 * @param {JSON|string} msg - The message to send to the client
 	 * @param {string} emit_to - The location to emit the message to
@@ -58,6 +58,12 @@ var wait_rooms = new room_object(room_min_size, room_max_size);
 		});
 	}
 
+	/**
+	 * On Connection Event - Create the socket for the request 
+	 * @type {object}
+	 * @private
+	 * @event io.socket#connection
+	 */
 	io.sockets.on('connection', function(socket) {
 		socket.emit('connection_status', {
 			msg : "Connection Successful"
@@ -67,12 +73,18 @@ var wait_rooms = new room_object(room_min_size, room_max_size);
 		// successful
 		// connection
 
+		
 		socket.on('disconnect', function() {
 
 		});
 
-		// Overwrite the default socket connection for on-close
-		// Allows operations to be performed before the object is deleted
+		
+		/**
+		 * Override the default socket connection for on-close.
+		 * Allows operations to be performed before the object is deleted
+		 * @private
+		 * @event create_socket#disconnect
+		 */
 		socket.onclose = function(reason) {
 			// emit to rooms here
 			emit_new_message(socket, {
@@ -82,10 +94,22 @@ var wait_rooms = new room_object(room_min_size, room_max_size);
 		}
 
 		// User wants to join a game
+		/**
+		 * Client has requested to join a game
+		 * @event create_socket#join_game
+		 * @fires io#you_join 
+		 * @fires create_socket#user_join
+		 * @access private
+		 */
 		socket.on('join_game', function(msg) {
 			var room_info = wait_rooms.add_to_room(socket, msg.game_id);
 			var room_num = room_info.room;
-
+			/**
+			 * Sends a message to the client that they have successfully joined a game
+			 * Includes the number player they are in the room
+			 * @event create_socket#you_join
+			 * @private
+			 */
 			io.to(socket.id).emit('you_join', {// Send message to user
 				// based on their room
 				'msg' : msg.msg,
@@ -93,6 +117,11 @@ var wait_rooms = new room_object(room_min_size, room_max_size);
 			});
 
 			//Emit message to other users of a new client joining
+			/**
+			 * Sends a message to all others users in a room that a new user has joined
+			 * @event create_socket#user_join
+			 * @private
+			 */
 			emit_new_message(socket, {
 				'msg' : msg.msg,
 				'for' : 'not_me'
@@ -112,12 +141,18 @@ var wait_rooms = new room_object(room_min_size, room_max_size);
 		 * @param {room_information_container}
 		 *            room - The room object containing information about the
 		 *            room
+		 * @fires create_socket#game_start
 		 * @access private
 		 */
 		function start_game(socket, room) {
 			var rooms = socket.adapter.rooms;
 			var count = 1;
 			Object.keys(rooms[room.id].sockets).forEach(function(element, index, array) {
+				/**
+				 * Sends messages to users that a game has started
+				 * @event socket#game_start
+				 * @private
+				 */
 				single_emit_new_message(element, {
 					'msg' : {
 						'msg': 'Game Start',
@@ -129,12 +164,34 @@ var wait_rooms = new room_object(room_min_size, room_max_size);
 
 		}
 
+		/**
+		 * Disconnects a user from the socket
+		 * @fires create_socket#user_disconnected
+		 * @event create_socket#user_diconnecting
+		 * @access private
+		 */
 		socket.on('user_disconnecting', function(msg) {
+			/**
+			 * Sends message to all users who are still connected that another user has disconnected
+			 * @event create_socket#user_disconnected
+			 * @private
+			 */
 			emit_new_message(socket, msg, "user_disconnected");
 			socket.disconnect();
 		});
-
+		
+		/**
+		 * Pass a message to whoever is meant to recieve it 
+		 * @fires create_socket#game_update
+		 * @event create_socket#user_message
+		 * @access private
+		 */
 		socket.on('game_message', function(msg) {// Emit a game message
+			/**
+			 * Send information from one client to all other connected clients
+			 * @event create_socket#game_update
+			 * @private
+			 */
 			emit_new_message(socket, msg, 'game_update');
 		});
 

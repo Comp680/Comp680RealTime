@@ -1,4 +1,4 @@
-/**
+/*
  * Contains all moves neccessary to play tic-tac-toe
  */
 

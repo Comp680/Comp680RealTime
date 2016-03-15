@@ -5,7 +5,7 @@
     },
     "source": {
 		"include":["public"],
-		"exclude":[],
+		"exclude":["tic-tac-play.js","chess-game.js"],
         "includePattern": ".+\\.js(doc)?$",
         "excludePattern": "(^|\\/|\\\\)_"
     },

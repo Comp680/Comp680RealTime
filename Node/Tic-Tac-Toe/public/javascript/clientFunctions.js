@@ -244,5 +244,16 @@
 		}
 		return this;
 	}
+	
+	/**
+	 * Allows the user to log into the service utilizing a username and password combination
+	 * @param {string} username - The user username
+	 * @param {password} password - The password of the user
+	 */
+	this.login = function(username, password){
+		$.post( server + "/login", function( data ) {
+			window.location.href = data.redirect;
+			});
+	}
 
 }(jQuery));

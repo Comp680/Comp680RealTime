@@ -20,16 +20,36 @@ router.get('/', function(req, res, next) {
  *
  * @apiParam {String} username The desired username of the user
  * @apiParam {String} password The desired password of the user
- * 
+ *
+ *@apiSuccess {String} username The username of the user
+ * @apiSuccessExample {json} Success-Response:
+*     HTTP/1.1 200 OK
+*     {
+*       "username": "John"
+*     }
+ * @apiError AlreadyExists Username already exists
+ * @apiErrorExample {json} Error-Response:
+ *  HTTP/1.1 409 Conflict
+ *     {
+ *       "error": "AlreadyExists"
+ *     }
  */
 router.post('/register', function(req, res) {
-    Account.register(new Account({ username : req.body.username }), req.body.password, function(err, account) {
+    Account.register(new Account({ username : req.body.username }),
+    req.body.password,
+    function(err, account) {
         if (err) {
-            return res.render('register', { account : account });
+              return res.status(409).send(
+              {
+                error: "AlreadyExists"
+              }
+          );
         }
 
         passport.authenticate('local')(req, res, function () {
-            res.redirect('/');
+            res.status(200).send({
+              "username":req.body.username
+            });
         });
     });
 });
@@ -48,8 +68,8 @@ router.get('/register', function(req, res) {
  * @api {get} /login Request Login Page
  * @apiName RequestLogin
  * @apiGroup User
- * 
- 
+ *
+
  */
 router.get('/login', function(req, res) {
     res.render('login', { user : req.user });
@@ -62,10 +82,38 @@ router.get('/login', function(req, res) {
  *
  * @apiParam {String} username The id of the user
  * @apiParam {String} password The password of the user
+ *
+ * @apiSuccess {String} username The username of the user
+ * @apiSuccessExample {json} Success-Response:
+ *     HTTP/1.1 200 OK
+ *     {
+ *       "username": "John"
+ *     }
+ * @apiError {JSON} UserNotFound The <code> username </code> of the User was not found
+ * @apiErrorExample {json} Error-Response:
+ *  HTTP/1.1 404 Not Found
+ *     {
+ *       "error": "UserNotFound"
+ *     }
  */
-router.post('/login', passport.authenticate('local'), function(req, res) {
-    res.redirect('/');
-});
+router.post('/login', passport.authenticate('local',
+
+ function(err, user, info) {
+   if(err){
+     //Send an error message. No such user
+     res.status(404).send({
+       "error":"UserNotFound"
+     });
+   }else{
+     //Send user information
+     res.status(200).send({
+       "username":user
+     })
+   }
+ }
+
+
+));
 
 /**
  * @api {get} /logout Log a user out
@@ -74,7 +122,6 @@ router.post('/login', passport.authenticate('local'), function(req, res) {
  */
 router.get('/logout', function(req, res) {
     req.logout();
-    res.redirect('/');
 });
 
 /**

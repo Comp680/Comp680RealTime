@@ -9,7 +9,7 @@
     "title": "Backend",
     "url" : "https://api.github.com/v1",
 	"input":["routes/"],
-	"dest":"api_help/"
+	"dest":"./api_help/"
   },
   "repository": "",
   "dependencies": {

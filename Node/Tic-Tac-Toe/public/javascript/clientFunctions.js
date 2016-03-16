@@ -9,11 +9,11 @@
 (function($) {
 	var version = '0.0.1';
 
-	
+
 
 	/**
 	 * Contains everything required to create an connection to the server
-	 * 
+	 *
 	 * @constructor
 	 * @param {string}
 	 *            Server - the server to send information to
@@ -45,10 +45,10 @@
 		/**
 		 * Creates the message for the backend server
 		 * @access private
-		 * @param {string|JSON} msg - The message which will be added to the server data 
+		 * @param {string|JSON} msg - The message which will be added to the server data
 		 */
 		function create_message(msg) {
-			
+
 			return {
 				'msg' : msg,
 				'version_num' : version,
@@ -57,7 +57,7 @@
 			};
 
 		}
-		
+
 		if (server == null) {
 			throw new error(
 					"An ip address/web domain is required. Please enter a server address.");
@@ -71,7 +71,7 @@
 		/*
 		 * Contains functions which will be called when information is recieved
 		 * from the server
-		 * 
+		 *
 		 */
 		this._options = {
 			onUserJoin : null,// User joins lobby
@@ -145,7 +145,7 @@
 				this.socket.on('user_disconnected',
 						this._options.onOtherUserDisconnect);
 			}
-			
+
 			if(this._options.onThisClientJoinGame !== null) {
 				/**
 				 * A user has joined the game the current user is in
@@ -155,16 +155,16 @@
 				 */
 				this.socket.on('you_join',
 						this._options.onThisClientJoinGame);
-				
+
 			}
-			
+
 
 		}
 
 		/**
 		 * Terminate connection to server - if game is in in progress, notifies
 		 * other clients this client has disconnected
-		 * 
+		 *
 		 * @param {JSON|string}
 		 *            msg - the json object containing information to send to
 		 *            other users
@@ -185,7 +185,7 @@
 		 * Declare to server that client wishes to join next available game if
 		 * no game is available, initiate game. else add client to existing wait
 		 * lobby until lobby has been filled
-		 * 
+		 *
 		 * @param {JSON|string}
 		 *            join_msg - the json object containing information to send
 		 *            to other users
@@ -215,7 +215,7 @@
 
 		/**
 		 * Allows a client to send a message to currently active game
-		 * 
+		 *
 		 * @param {JSON|string}
 		 *            msg - the json object containing information to send to
 		 *            other users
@@ -233,7 +233,7 @@
 		/**
 		 * Timed keep alive letting server know that client is still connected -
 		 * client must call this function every TBD after connection
-		 * 
+		 *
 		 * @param {number}
 		 *            seconds - number seconds between keep alive messages
 		 */
@@ -244,16 +244,41 @@
 		}
 		return this;
 	}
-	
+
 	/**
 	 * Allows the user to log into the service utilizing a username and password combination
 	 * @param {string} username - The user username
 	 * @param {password} password - The password of the user
+	 * @callback  {LoginSuccessCallback} success - callback function performed on successfully connecting
+	 * @callback {LoginFailureCallback} failure - callback function performed on failure to connect
 	 */
-	this.login = function(username, password){
-		$.post( server + "/login", function( data ) {
-			window.location.href = data.redirect;
-			});
+	this.login = function(username, password,success,failure){
+			var ops = {
+				"success":success,
+				"error":failure,
+				"method":"POST",
+				"data":{
+					"username":username,
+					"password":password
+				}
+			}
+
+		$.ajax( server + "/login", ops)
 	}
+	/**
+	This callback is for success on login
+	@callback LoginSuccessCallback
+	@param {Anything} data - The data returned by the server
+	@param {String} textStatus - The status of the server data
+	@param {jqXHR} jqXHR
+	*/
+
+	/**
+	This callback is for failure on login
+	@callback LoginFailureCallback
+	@param {jqXHR} jqXHR - string describing the type of error that occurred and an optional exception object
+	@param {String} textStatus - The status of the server data
+	@param {String} errorThrown - The error thrown by the server
+	*/
 
 }(jQuery));

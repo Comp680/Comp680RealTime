@@ -2,10 +2,10 @@ extends login_layout
 
 block content
   .container
-    h1 Register Page
+    h1 Login Page
     p.lead Say something worthwhile here.
     br
-    form(role='form', action="/register",method="post", style='max-width: 300px;')
+    form(role='form', action="login()",method="post", style='max-width: 300px;')
       .form-group
           input.form-control(type='text', name="username", placeholder='Enter Username')
       .form-group
@@ -14,6 +14,3 @@ block content
       &nbsp;
       a(href='/')
         button.btn.btn-primary(type="button") Cancel
-      br
-      h4(name="results")
-      

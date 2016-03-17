@@ -14,11 +14,10 @@ router.get('/', function(req, res, next) {
     user: req.user,
     title: "Login"
   });
-  console.log('test');
 });
 
 /**
- * @api {post} /users/register Request User information
+ * @api {post} /users/register Register a new user
  * @apiName CreateUser
  * @apiGroup User
  *
@@ -95,7 +94,6 @@ router.post('/login',cors, function(req, res, next) {
 
   passport.authenticate('user',
     function(err, user, info) {
-      console.log('user');
       if (err) {
 				return next(err);
 			}

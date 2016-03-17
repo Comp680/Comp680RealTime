@@ -8,6 +8,7 @@ Contains variables used throughout the code in order to allow for quick replacem
 */
 
 module.exports = {
-  'userdb':'mongodb://localhost/passport_local_mongoose_express4',
-  'websitedb':'mongodb://localhost/website_list'
+  'userdb':'mongodb://localhost/user_list',
+  'websitedb':'mongodb://localhost/website_list',
+  'host':'http://localhost:3000'
 }

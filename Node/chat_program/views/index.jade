@@ -2,9 +2,9 @@ extends login_layout
 
 block content
   if (!user)
-    a(href="/login") Login
+    a(href="/users/login") Login
     br
-    a(href="/register") Register
+    a(href="/users/register") Register
   if (user)
     p You are currently logged in as #{user.username}
-    a(href="/logout") Logout
+    a(href="/users/logout") Logout

@@ -1,14 +1,10 @@
 define({
-  "title": "Backend",
-  "url": "https://api.github.com/v1",
-  "input": [
-    "routes/"
-  ],
-  "dest": "api_help/",
-  "name": "apidoc-example",
+  "name": "Game Backend",
   "version": "0.3.0",
   "description": "Backend",
-  "sampleUrl": "https://api.github.com/v1",
+  "title": "Backend",
+  "url": "https://localhost:3000",
+  "sampleUrl": "https://localhost:3000",
   "template": {
     "withCompare": true,
     "withGenerator": true
@@ -16,10 +12,11 @@ define({
   "src": [
     "routes/"
   ],
+  "dest": "api_help/",
   "apidoc": "0.2.0",
   "generator": {
     "name": "apidoc",
-    "time": "2016-03-16T21:14:22.927Z",
+    "time": "2016-03-17T18:07:43.557Z",
     "url": "http://apidocjs.com",
     "version": "0.15.1"
   }

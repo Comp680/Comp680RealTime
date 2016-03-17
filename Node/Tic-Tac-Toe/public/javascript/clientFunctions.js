@@ -242,8 +242,8 @@
 				this.socket.emit('keep_alive');
 			}, second * 1000);
 		}
-		return this;
-	}
+
+
 
 	/**
 	 * Allows the user to log into the service utilizing a username and password combination
@@ -260,11 +260,12 @@
 				"data":{
 					"username":username,
 					"password":password
-				}
+				},
+				'Access-Control-Allow-Headers': 'x-requested-with, x-requested-by'
 			}
 
-		$.ajax( server + "/login", ops)
-	}
+		$.ajax( server + "/users/login", ops);
+	};
 	/**
 	This callback is for success on login
 	@callback LoginSuccessCallback
@@ -281,4 +282,22 @@
 	@param {String} errorThrown - The error thrown by the server
 	*/
 
+	this.register = function(username,password,success,failure){
+		var ops = {
+			"success":success,
+			"error":failure,
+			"method":"POST",
+			"data":{
+				"username":username,
+				"password":password
+			},
+			'Access-Control-Allow-Headers': 'x-requested-with, x-requested-by'
+		}
+
+	$.ajax(server + "/users/register", ops);
+	}
+
+
+	return this;
+	};//End of Client
 }(jQuery));

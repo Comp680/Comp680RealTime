@@ -262,7 +262,10 @@
           "username": username,
           "password": password
         },
-        'Access-Control-Allow-Headers': 'x-requested-with, x-requested-by'
+				"crossDomain": true,
+        "xhrFields": {
+          "withCredentials": true
+        }
       }
 
       $.ajax(server + "/users/login", ops);
@@ -299,9 +302,9 @@
           "username": username,
           "password": password
         },
-				crossDomain: true,
-        xhrFields: {
-          withCredentials: true
+				"crossDomain": true,
+        "xhrFields": {
+          "withCredentials": true
         }
       };
 

@@ -28,7 +28,11 @@
     "should": "~2.1.0",
     "cors": "*",
     "oauthorize": "*",
-    "passport-http-oauth": "*"
+    "passport-http-oauth": "*",
+    "passport.socketio": "*",
+    "sessionstore": "*",
+    "mongodb": "*",
+    "connect-mongo": "*"
   },
   "devDependencies": {
     "grunt": "^0.4.5",

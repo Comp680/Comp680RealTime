@@ -9,11 +9,11 @@ var cors = require('../controller/cor_configuration.js');
  * @apiGroup Default
  * @apiName FrontPage
  */
-router.get('/', function(req, res, next) {
-  res.render('index', {
-    user: req.user,
-    title: "Login"
-  });
+router.get('/', function (req, res, next) {
+    res.render('index', {
+        user: req.user,
+        title: "Login"
+    });
 });
 
 /**
@@ -31,24 +31,24 @@ router.get('/', function(req, res, next) {
  * @apiErrorExample {json} Error-Response: HTTP/1.1 409 Conflict { "error":
  *                  "AlreadyExists" }
  */
-router.post('/register',cors, function(req, res,next) {
+router.post('/register', cors, function (req, res, next) {
+    
+    Account.register(new Account({
+        username: req.body.username
+    }), req.body.password, function (err, account) {
+        if (err) {
+            return res.status(409).send({
+                error: "AlreadyExists"
+            });
+        }
+        
+        passport.authenticate('user')(req, res, function () {
+            res.status(200).send({
+                "username": req.body.username
+            });
+        });
 
-  Account.register(new Account({
-    username: req.body.username
-  }), req.body.password, function(err, account) {
-    if (err) {
-      return res.status(409).send({
-        error: "AlreadyExists"
-      });
-    }
-
-    passport.authenticate('user')(req, res, function() {
-      res.status(200).send({
-        "username": req.body.username
-      });
     });
-
-  });
 });
 
 /**
@@ -57,8 +57,8 @@ router.post('/register',cors, function(req, res,next) {
  * @apiGroup User
  *
  */
-router.get('/register', function(req, res) {
-  res.render('register', {});
+router.get('/register', function (req, res) {
+    res.render('register', {});
 });
 
 /**
@@ -68,10 +68,10 @@ router.get('/register', function(req, res) {
  *
  *
  */
-router.get('/login', function(req, res) {
-  res.render('login', {
-    user: req.user
-  });
+router.get('/login', function (req, res) {
+    res.render('login', {
+        user: req.user
+    });
 });
 
 /**
@@ -90,30 +90,30 @@ router.get('/login', function(req, res) {
  * @apiErrorExample {json} Error-Response: HTTP/1.1 404 Not Found { "error":
  *                  "UserNotFound" }
  */
-router.post('/login',cors, function(req, res, next) {
-
-  passport.authenticate('user',
-    function(err, user, info) {
-      if (err) {
-				return next(err);
-			}
-
-			if(!user){
-				// Send an error message. No such user
-        return res.status(404).send({
-          "error": "UserNotFound"
+router.post('/login', cors, function (req, res, next) {
+    
+    passport.authenticate('user',
+    function (err, user, info) {
+        if (err) {
+            return next(err);
+        }
+        
+        if (!user) {
+            // Send an error message. No such user
+            return res.status(404).send({
+                "error": "UserNotFound"
+            });
+        }
+        
+        //Check if user has account
+        req.logIn(user, function (err) {
+            if (err) { return next(err); }
+            
+            // Send user information
+            return res.status(200).send({
+                "username": user.username
+            });
         });
-			}
-
-			//Check if user has account
-			req.logIn(user, function(err) {
-				 if (err) { return next(err); }
-
-				// Send user information
-        return res.status(200).send({
-          "username": user.username
-        });
-      });
 
     })(req, res, next);
 });
@@ -123,8 +123,8 @@ router.post('/login',cors, function(req, res, next) {
  * @apiName LogoutUser
  * @apiGroup User
  */
-router.get('/logout', function(req, res) {
-  req.logout();
+router.get('/logout', function (req, res) {
+    req.logout();
 });
 
 /**
@@ -132,14 +132,14 @@ router.get('/logout', function(req, res) {
  * @apiName Ping
  * @apiGroup Ping
  */
-router.get('/ping', function(req, res) {
-  res.status(200).send("pong!");
+router.get('/ping', function (req, res) {
+    res.status(200).send("pong!");
 });
 
-router.get('/login', function(req, res, next) {
-  res.render('error', {
-    title: 'Express'
-  });
+router.get('/login', function (req, res, next) {
+    res.render('error', {
+        title: 'Express'
+    });
 });
 
 

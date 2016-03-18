@@ -4,7 +4,12 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var passport = require('passport');
+var passport = require('./controller/users');
+var express_session = require('express-session');
+var MongoStore = require('connect-mongo')(express_session);
+var DataContainer = require('./models/DataContainer');
+
+//Routes
 var website = require('./routes/websites');
 var routes = require('./routes/index');
 var users = require('./routes/users');
@@ -22,8 +27,12 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(require('express-session')({
-    secret: 'keyboard cat',
+app.use(express_session({
+    key: 'express.sid',
+    store: new MongoStore({
+        "url": DataContainer.sessionStoragedb
+    }),
+    secret: 'worldwar1',
     resave: false,
     saveUninitialized: false
 }));

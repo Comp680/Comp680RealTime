@@ -30,13 +30,14 @@ Account.find({website:database.host},function(err,docs){
 Allows for cors connections
 */
 var corsOptions = {
-  origin: function(origin, callback) {
+  'origin': function(origin, callback) {
     Account.find({website:new RegExp("^" + origin + "*","i")},function(err,docs){
       var originIsWhitelisted = docs.length > 0;
       callback(null, originIsWhitelisted);
     });
 
-  }
+  },
+  'credentials':true
 };
 
 module.exports = cors(corsOptions);

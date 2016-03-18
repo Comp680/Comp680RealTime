@@ -16,7 +16,7 @@ online_chess.connectToServer();
 online_chess.joinGame("Player Joined");
 
 function userJoin(msg){
-	
+
 }
 
 function OnUserDisconnect(msg){
@@ -25,12 +25,12 @@ function OnUserDisconnect(msg){
 		board = ChessBoard('board', cfg);
 		game = new Chess();
 		update_screen_values();
-		
+
 		online_chess.joinGame("Player Joined");
 	} else {
-	    
+
 	}
-	
+
 }
 
 function gameStart(message){
@@ -72,7 +72,7 @@ function update_screen_values(){
 // only pick up pieces for the side to move
 var onDragStart = function(source, piece, position, orientation) {
 	var temp = piece.search(player_color_regex);
-	if (game.game_over() === true 
+	if (game.game_over() === true
 			|| !game_started
 			|| game.turn() !== player_color
 			|| (game.turn() === player_color && piece.search(player_color_regex) !== -1)) {
@@ -103,7 +103,7 @@ var onSnapEnd = function() {
 	var current_board = {
 			'board' : game.fen()
 		};
-		
+
 		online_chess.passGameData(current_board);
 };
 
@@ -139,7 +139,7 @@ var check_game_status = function() {
 
 var updateStatus = function() {
 	var status = '';
-	
+
 
 	status = check_game_status();
 

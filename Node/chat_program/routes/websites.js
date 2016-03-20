@@ -3,17 +3,19 @@ var router = express.Router();
 var uuid = require('node-uuid');
 var passport = require('passport');
 var Account = require('../models/webaccount');
-
+var webreg = require('../controller/website_registration');
 
 /**
- * @api {get} /users/register Request registration page
+ * @api {get} /websites/register Request registration page
  * @apiName RegisterWebsitePage
  * @apiGroup WebsiteManagement
  *
  */
-router.get('/register', function(req, res) {
-  res.render('website/register', {});
+router.get('/register', function (req, res) {
+    res.render('website/register', {});
 });
+
+
 
 /**
  * @api {post} /websites/register
@@ -40,29 +42,82 @@ router.get('/register', function(req, res) {
       "reason":
     }
  */
-router.post('/register', function(req, res,next) {
+router.post('/register', function (req, res, next) {
+    
+    Account.register(new Account({
+        'username': req.body.username,
+        'website': req.body.website,
+        'game_code': [{}]
+    
+    }), req.body.password, function (err, account) {
+        if (err) {
+            return res.status(409).send({
+                error: "AlreadyExists",
+                reason: err
+            });
+        }
+        
+        //Attempt to login
+        passport.authenticate('website')(req, res, function () {
+            res.status(200).send({
+                "username": req.body.username,
+                "website": req.body.website
+            });
+        });
 
-  Account.register(new Account({
-    'website': req.body.website,
-    'game_code': uuid.v1(),
-    'username': req.body.username
-  }),req.body.password, function(err, account) {
-    if (err) {
-      return res.status(409).send({
-        error: "AlreadyExists",
-        reason: err
-      });
-    }
-
-    //Attempt to login
-    passport.authenticate('website')(req, res, function() {
-      res.status(200).send({
-        "username": req.body.username,
-        "website": req.body.website
-      });
     });
-
-  });
 });
+
+/**
+ * @api {get}  /websites/login Request the website login page
+ * @apiName LoginWebsiteManager
+ *  @apiGroup WebsiteManagement
+ */
+router.get('/login', function (req, res) {
+    res.render('website/login', {});
+});
+
+router.post('/login', function (req, res, next) {
+    
+    passport.authenticate('website',
+    function (err, user, info) {
+        if (err) {
+            return next(err);
+        }
+        
+        if (!user) {
+            // Send an error message. No such user
+            return res.status(404).send({
+                "error": "UserNotFound"
+            });
+        }
+        
+        //Check if user has account
+        req.logIn(user, function (err) {
+            if (err) { return next(err); }
+            res.redirect("settings");
+        });
+
+    })(req, res, next);
+});
+
+/**
+ * @api {get} /website/setting View the users setting screen
+ * @apiName WebsiteSettings
+ * @apiGroup WebsiteManagement
+ * */
+router.get('/settings', webreg.isLoggedIn, function (req, res, next) {
+    
+    var game_list = Account.findOne({ 'username': req.user.username }, function (err, user) {
+        res.render('website/settings', {
+            username: req.user.username,
+            games: user.game_code
+        });
+    }); 
+
+    
+});
+
+
 
 module.exports = router;

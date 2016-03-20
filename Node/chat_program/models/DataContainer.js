@@ -22,6 +22,6 @@ module.exports = {
     'websitedb': 'mongodb://localhost/website_list',
     'sessionStoragedb': "mongodb://localhost/sessionsDB",
     'socketRoomsdb': "mongodb://localhost/roomsDB",
-    'host': 'http://localhost:3000',
+    'host': 'http://localhost:3000'
    
 }

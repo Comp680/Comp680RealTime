@@ -28,8 +28,9 @@ router.get('/', function (req, res, next) {
  * @apiSuccessExample {json} Success-Response: HTTP/1.1 200 OK { "username":
  *                    "John" }
  * @apiError AlreadyExists Username already exists
- * @apiErrorExample {json} Error-Response: HTTP/1.1 409 Conflict { "error":
- *                  "AlreadyExists" }
+ * @apiErrorExample {json} Error-Response: 
+ * HTTP/1.1 409 Conflict 
+ * { "error": "AlreadyExists" }
  */
 router.post('/register', cors, function (req, res, next) {
     
@@ -83,12 +84,18 @@ router.get('/login', function (req, res) {
  * @apiParam {String} password The password of the user
  *
  * @apiSuccess {String} username The username of the user
- * @apiSuccessExample {json} Success-Response: HTTP/1.1 200 OK { "username":
- *                    "John" }
+ * @apiSuccessExample {json} 
+ * Success-Response: HTTP/1.1 200 OK 
+ * { 
+ *  "username":"John" 
+ * }
  * @apiError {JSON} UserNotFound The <code> username </code> of the User was not
  *           found
- * @apiErrorExample {json} Error-Response: HTTP/1.1 404 Not Found { "error":
- *                  "UserNotFound" }
+ * @apiErrorExample {json} Error-Response: 
+ * HTTP/1.1 404 Not Found 
+ * { 
+ * "error": "UserNotFound"
+ *  }
  */
 router.post('/login', cors, function (req, res, next) {
     

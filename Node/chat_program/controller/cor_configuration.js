@@ -8,6 +8,7 @@ var mongoose = require('mongoose');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var database = require('../models/DataContainer');
+var webreg = require("./website_registration");
 passport.use('website',Account.createStrategy())
 passport.serializeUser(Account.serializeUser());
 passport.deserializeUser(Account.deserializeUser());

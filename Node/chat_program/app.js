@@ -14,6 +14,7 @@ var website = require('./routes/websites');
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var chat = require('./routes/chat');
+var games = require('./routes/games');
 var app = express();
 
 // view engine setup
@@ -44,7 +45,7 @@ app.use('/', routes);
 app.use('/users', users);
 app.use('/chat',chat);
 app.use('/website',website);
-
+app.use('/website/games', games);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

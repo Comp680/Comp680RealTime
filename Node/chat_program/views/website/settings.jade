@@ -1,0 +1,23 @@
+﻿extends top_bar
+ 
+block internal_content
+    table.table.striped-table
+        thead
+            tr
+                th
+                    |Name
+                th 
+                    |id
+        tbody
+            - each item in games
+                tr
+                    td= item.name
+                    td= item.id
+            tr
+                form(role='form', action="/website/games/add", method="post", style='max-width: 300px;')
+                    td
+                     .form-group
+                        input.form-control(type='text', name="name", placeholder='Game Name') 
+                    td
+                        button.btn.btn-default(type='submit') Submit
+                        

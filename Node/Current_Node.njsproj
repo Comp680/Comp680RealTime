@@ -59,8 +59,10 @@
     <Content Include="help_files\waiting_rooms.html" />
     <Compile Include="models\account.js" />
     <Compile Include="models\DataContainer.js" />
+    <Compile Include="models\games.js" />
     <Compile Include="models\webaccount.js" />
     <Compile Include="routes\chat.js" />
+    <Compile Include="routes\games.js" />
     <Compile Include="routes\index.js" />
     <Compile Include="routes\users.js" />
     <Compile Include="routes\websites.js" />
@@ -250,7 +252,10 @@
     <Compile Include="help_files\scripts\prettify\prettify.js" />
     <Compile Include="public\javascript\chat_front.js" />
     <Content Include="public\stylesheets\style.css" />
+    <Content Include="views\website\login.jade" />
     <Content Include="views\website\register.jade" />
+    <Content Include="views\website\settings.jade" />
+    <Content Include="views\website\top_bar.jade" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="api_help" />

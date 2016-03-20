@@ -12,7 +12,7 @@ block internal_content
             - each item in games
                 tr
                     td= item.name
-                    td= item.id
+                    td= item.game_id
             tr
                 form(role='form', action="/website/games/add", method="post", style='max-width: 300px;')
                     td

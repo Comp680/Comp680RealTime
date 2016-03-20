@@ -111,7 +111,8 @@ router.get('/settings', webreg.isLoggedIn, function (req, res, next) {
     var game_list = Account.findOne({ 'username': req.user.username }, function (err, user) {
         res.render('website/settings', {
             username: req.user.username,
-            games: user.game_code
+            games: user.game_code,
+            website: user.website
         });
     }); 
 

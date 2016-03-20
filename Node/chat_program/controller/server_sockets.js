@@ -7,9 +7,16 @@ var authorized = require("./users");
 var session = require('express-session'),
     DataContainer = require('../models/DataContainer'),
     MongoStore = require('connect-mongo')(session);
-passportSocketIo = require("passport.socketio");
+passportSocketIo = require("passport.socketio"),
+cors = require("./cor_configuration");
+var mongoose = require('mongoose');
 var cookieParser = require('cookie-parser');
+var webreg = require('./website_registration');
 var wait_rooms = new room_object(room_min_size, room_max_size);
+
+/**
+ * @module server_sockets
+ * */
 
 /**
  * Server Object
@@ -22,13 +29,16 @@ var wait_rooms = new room_object(room_min_size, room_max_size);
 /**
  * Emit a message to multiple users
  * @param {external:http.Server} io - Socket.io object
- * @class
+ * @function
  */
 function create_socket(io) {
     
+    //Check if the current connection attempt is from a registered site
+    io.use(function (socket,accept) {
+        webreg.isRegistered(socket.request, accept);
+    });
     
-    
-    
+    //Check if the current user is signed in
     io.use(passportSocketIo.authorize({
         passport: require('./users'),
         cookieParser: cookieParser,       // the same middleware you registrer in express 
@@ -40,6 +50,8 @@ function create_socket(io) {
         success: onAuthorizeSuccess,  // *optional* callback on success - read more below 
         fail: onAuthorizeFail,     // *optional* callback on fail/error - read more below 
     }));
+    
+
     /**
      * The authorization of the socket was successful, user was logged in
          * @param {Object} data - The data passed from the successful connection 
@@ -160,7 +172,9 @@ function create_socket(io) {
             // emit to rooms here
             emit_new_message(socket, {
                 msg: "user disconnect",
-                username: socket.request.user.username
+                server: {
+                    username: socket.request.user.username
+                }
             }, "user_disconnected");
             Object.getPrototypeOf(this).onclose.call(this, reason);
         }

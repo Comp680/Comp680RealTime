@@ -1,5 +1,6 @@
 var uuid = require('node-uuid');
-
+var mongoose = require('mongoose');
+mongoose.createConnection()
 /**
  * Contains information about the current room which has been created
  * 

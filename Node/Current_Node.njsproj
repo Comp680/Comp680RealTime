@@ -23,6 +23,7 @@
     <Content Include="package.json" />
     <Content Include="README.md" />
     <Compile Include="app.js" />
+    <Compile Include="controller\website_registration.js" />
     <Compile Include="Gruntfile.js" />
     <Content Include="api_help\index.html" />
     <Content Include="api_help\api_data.json" />

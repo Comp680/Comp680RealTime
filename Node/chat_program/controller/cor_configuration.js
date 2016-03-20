@@ -14,6 +14,7 @@ passport.deserializeUser(Account.deserializeUser());
 //Mangoose Connection
 mongoose.createConnection(database.websitedb);
 
+//Create a new account for the local site
 Account.find({website:database.host},function(err,docs){
   if(docs.length == 0){
     (new Account({website:database.host})).save(function (err) {
@@ -23,7 +24,6 @@ Account.find({website:database.host},function(err,docs){
 
 
 })
-//Create a new account for the local site
 
 
 /*

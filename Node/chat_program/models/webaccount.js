@@ -7,6 +7,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var passportLocalMongoose = require('passport-local-mongoose');
 
+//Account schema for a website information
 var Account = new Schema({
     website: String,
     game_code: String,

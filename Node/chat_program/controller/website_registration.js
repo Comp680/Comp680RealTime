@@ -30,6 +30,23 @@ function isWebsiteRegistered(req,callback) {
         
     });
 }
+/**
+ * Middleware to register a new website linked to a user
+ * @param {Object} req
+ * @param (Object) res
+ * @param (function) next
+ * */
+function registerNewWebsite(req, res, next) {
+    
+    if (req.body.website && req['user']) {
+        console.log(req['user']._id);
+        (new Account({ name: req.body.website, user_id: req['user']._id })).save(function (err) {
+            if (err) return next(err);
+        });
+    } else {
+        return next(err);
+    }
+}
 
 /**
  * Route Middleware to check if user is logged in
@@ -40,7 +57,7 @@ function isWebsiteRegistered(req,callback) {
  * */
 function isLoggedIn(req, res, next) {
     // if user is authenticated in the session, carry on 
-    if (req.isAuthenticated('website'))
+    if (req.isAuthenticated())
         return next();
     
     // if they aren't redirect them to the home page
@@ -54,5 +71,6 @@ function isLoggedIn(req, res, next) {
  * */
 module.exports = {
     isRegistered: isWebsiteRegistered,
-    isLoggedIn:isLoggedIn
+    isLoggedIn: isLoggedIn,
+    registerNewWebsite:registerNewWebsite
 }

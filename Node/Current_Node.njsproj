@@ -256,6 +256,7 @@
     <Content Include="views\website\register.jade" />
     <Content Include="views\website\settings.jade" />
     <Content Include="views\website\top_bar.jade" />
+    <Content Include="views\website\website-settings.jade" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="api_help" />

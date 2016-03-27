@@ -2,7 +2,8 @@ var express = require('express');
 var router = express.Router();
 var uuid = require('node-uuid');
 var passport = require('passport');
-var Account = require('../models/webaccount');
+var webAccount = require('../models/webaccount');
+var userAccount = require('../models/account');
 var webreg = require('../controller/website_registration');
 
 /**
@@ -44,10 +45,9 @@ router.get('/register', function (req, res) {
  */
 router.post('/register', function (req, res, next) {
     
-    Account.register(new Account({
+    userAccount.register(new userAccount({
         'username': req.body.username,
-        'website': req.body.website,
-        'game_code': [{}]
+        role: 0,
     
     }), req.body.password, function (err, account) {
         if (err) {
@@ -58,7 +58,8 @@ router.post('/register', function (req, res, next) {
         }
         
         //Attempt to login
-        passport.authenticate('website')(req, res, function () {
+        passport.authenticate('user')(req, res, function () {
+            webreg.registerNewWebsite(req, res, next);
             res.status(200).send({
                 "username": req.body.username,
                 "website": req.body.website
@@ -66,7 +67,8 @@ router.post('/register', function (req, res, next) {
         });
 
     });
-});
+}
+);
 
 /**
  * @api {get}  /websites/login Request the website login page
@@ -79,7 +81,7 @@ router.get('/login', function (req, res) {
 
 router.post('/login', function (req, res, next) {
     
-    passport.authenticate('website',
+    passport.authenticate('user',
     function (err, user, info) {
         if (err) {
             return next(err);
@@ -95,28 +97,54 @@ router.post('/login', function (req, res, next) {
         //Check if user has account
         req.logIn(user, function (err) {
             if (err) { return next(err); }
-            res.redirect("settings");
+            if (user.role == 0) {
+                res.redirect("settings");
+            } else {
+                res.redirect('/users/login');
+            }
+            
+            
         });
 
-    })(req, res, next);
-});
+    })(req, res, next)
+}
+);
+
 
 /**
  * @api {get} /website/setting View the users setting screen
  * @apiName WebsiteSettings
  * @apiGroup WebsiteManagement
  * */
-router.get('/settings', webreg.isLoggedIn, function (req, res, next) {
+router.get('/settings', webreg.isLoggedIn, 
     
-    var game_list = Account.findOne({ 'username': req.user.username }, function (err, user) {
-        res.render('website/settings', {
-            username: req.user.username,
-            games: user.game_code,
-            website: user.website
+    function (req, res, next) {
+    
+    var game_list = userAccount.findOne({ 'username': req.user.username }, function (err, user) {
+        
+        webAccount.find({ 'user_id': user._id }, function (err, website) {
+            var temp = website[0].name;
+            res.render('website/website-settings', {
+                username: req.user.username,
+                games: website
+            }); 
+        
         });
-    }); 
+
+        
+    });
 
     
+});
+
+/**
+ * @api {get} /website/logout Log a user out
+ * @apiName LogoutUser
+ * @apiGroup User
+ */
+router.get('/logout', function (req, res) {
+    req.logout();
+    res.redirect("/website/login");
 });
 
 

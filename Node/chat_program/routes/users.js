@@ -35,7 +35,8 @@ router.get('/', function (req, res, next) {
 router.post('/register', cors, function (req, res, next) {
     
     Account.register(new Account({
-        username: req.body.username
+        username: req.body.username,
+        role:1
     }), req.body.password, function (err, account) {
         if (err) {
             return res.status(409).send({

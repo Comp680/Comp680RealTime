@@ -9,20 +9,20 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var database = require('../models/DataContainer');
 var webreg = require("./website_registration");
-passport.use('website',Account.createStrategy())
-passport.serializeUser(Account.serializeUser());
-passport.deserializeUser(Account.deserializeUser());
+//passport.use('website',Account.createStrategy())
+//passport.serializeUser(Account.serializeUser());
+//passport.deserializeUser(Account.deserializeUser());
 //Mangoose Connection
-mongoose.createConnection(database.websitedb);
+//mongoose.connect(database.websitedb);
 
 //Create a new account for the local site
 Account.find({website:database.host},function(err,docs){
-  if(docs.length == 0){
+    
+    if (docs.length == 0) {
     (new Account({website:database.host})).save(function (err) {
       if (err) return console.error(err);
     });
   }
-
 
 })
 

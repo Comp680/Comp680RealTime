@@ -5,18 +5,16 @@
 
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-var passportLocalMongoose = require('passport-local-mongoose');
+//var passportLocalMongoose = require('passport-local-mongoose');
 var gameAccount = require('./games');
 //Account schema for a website information
 var Account = new Schema({
-    website: String,
+    name: String,
     game_code: [gameAccount],
-    username: String,
-    password: String
+    user_id: String
 });
-
-Account.plugin(passportLocalMongoose);
-
+//Account.plugin(passportLocalMongoose);
 
 
-module.exports = mongoose.model('WebsiteAccount', Account);
+
+module.exports = mongoose.model('Website', Account);

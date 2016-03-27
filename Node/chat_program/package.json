@@ -32,7 +32,8 @@
     "sessionstore": "*",
     "mongodb": "*",
     "connect-mongo": "*",
-    "bootstrap": "*"
+    "bootstrap": "*",
+    "admin-lte": "*"
   },
   "devDependencies": {
     "grunt": "^0.4.5",

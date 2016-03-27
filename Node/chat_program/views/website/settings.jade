@@ -20,7 +20,8 @@ block internal_content
                         input.form-control(type='text', name="name", placeholder='Game Name') 
                     td
                       .form-group
-                        input.form-control(type='text', placeholder="Website Name" , disabled)
+                        input.form-control(type='hidden',name="website", value=website, disabled) 
+                        input.form-control(type='hidden',name="website", value=website) 
                     td
                         button.btn.btn-default(type='submit') Submit
     

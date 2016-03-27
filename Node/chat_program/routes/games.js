@@ -36,15 +36,16 @@ router.post("/add", webreg.isLoggedIn, function (req, res, next) {
     
     Account.findOneAndUpdate(
         {
-            'username': req.user.username
+            'name': req.body.website,
+            'user_id': req.user._id
         }, 
         {
             $push: 
  {
                 "game_code":
  {
-                   'name': req.body.name,
-                   'game_id': uuid.v1()
+                    'name': req.body.name,
+                    'game_id': uuid.v1()
                 }
             }
         }, {
@@ -54,7 +55,7 @@ router.post("/add", webreg.isLoggedIn, function (req, res, next) {
     function (err, model) {
             console.log(err);
             //Redirect to the site, later change to json
-            res.redirect("/website/settings");
+            res.redirect("/website/settings/" + req.body.website);
         });
 
 

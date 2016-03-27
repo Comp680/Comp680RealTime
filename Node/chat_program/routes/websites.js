@@ -113,7 +113,7 @@ router.post('/login', function (req, res, next) {
 
 /**
  * @api {get} /website/setting View the users setting screen
- * @apiName WebsiteSettings
+ * @apiName WebsiteSettingsList
  * @apiGroup WebsiteManagement
  * */
 router.get('/settings', webreg.isLoggedIn, 
@@ -127,7 +127,7 @@ router.get('/settings', webreg.isLoggedIn,
             res.render('website/website-settings', {
                 username: req.user.username,
                 games: website
-            }); 
+            });
         
         });
 
@@ -136,6 +136,39 @@ router.get('/settings', webreg.isLoggedIn,
 
     
 });
+
+
+
+/**
+ * @api {get} /website/setting/:websiteid View the users setting screen
+ * @apiName WebsiteGameList
+ * @apiGroup WebsiteManagement
+ * */
+router.get('/settings/:websiteid', 
+    webreg.isLoggedIn, 
+    function (req, res, next) {
+    webAccount.findOne({ 'name': req.website , 'user_id': req.user._id }, 
+        function (err, website) {
+        if (err) { return next(err) };
+        
+        
+        res.render('website/settings', {
+            username: req.user.username,
+            'website': website.name,
+            games: website.game_code
+        })
+    })
+
+
+});
+
+router.param('websiteid', function (req, res, next, id){
+
+    req.website = id;
+    next();
+})
+
+
 
 /**
  * @api {get} /website/logout Log a user out

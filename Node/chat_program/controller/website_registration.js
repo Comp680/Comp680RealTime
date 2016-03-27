@@ -20,7 +20,7 @@ var passport = require('./users');
  * @param {registeredNext} callback - Callback which handles the response
  * */
 function isWebsiteRegistered(req,callback) {
-    Account.find({ website: new RegExp("^" + req.headers.origin + "*", "i") }, function (err, docs) {
+    Account.find({ name: new RegExp("^" + req.headers.origin + "*", "i") }, function (err, docs) {
         var originIsWhitelisted = docs.length > 0;
         if (originIsWhitelisted) {
             callback();

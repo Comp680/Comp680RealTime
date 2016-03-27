@@ -32,7 +32,7 @@ Allows for cors connections
 */
 var corsOptions = {
   'origin': function(origin, callback) {
-    Account.find({website:new RegExp("^" + origin + "*","i")},function(err,docs){
+    Account.find({name:new RegExp("^" + origin + "*","i")},function(err,docs){
       var originIsWhitelisted = docs.length > 0;
       callback(null, originIsWhitelisted);
     });

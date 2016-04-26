@@ -45,7 +45,9 @@ router.post("/add", webreg.isLoggedIn, function (req, res, next) {
                 "game_code":
  {
                     'name': req.body.name,
-                    'game_id': uuid.v1()
+                    'game_id': uuid.v1(),
+                    'max_players': req.body.max_players,
+                    'min_players': req.body.min_players
                 }
             }
         }, {

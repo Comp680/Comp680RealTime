@@ -7,6 +7,46 @@ var userAccount = require('../models/account');
 var webreg = require('../controller/website_registration');
 
 /**
+ * @api {get} /websites/register-website Request website registration page
+ * @apiName RegisterNewWebsitePage
+ * @apiGroup WebsiteManagement
+ *
+ */
+router.get('/register-website', webreg.isLoggedIn, function (req, res) {
+    
+    
+    res.render('website/register-website');
+
+});
+
+/**
+ * @api {post} /websites/register-webiste
+ * @apiName RegisterWebsite
+ * @apiGroup WebsiteManagement
+ *
+ * @apiParam {String} website The website desired to be added
+ *
+ *
+ * @apiSuccess {String} acceessCode The code required by the website
+ * @apiSuccess {String} website The website name you provided
+ * @apiSuccessExample {json} Success-Response:
+  HTTP/1.1 200 OK
+  { "username":"John",
+    "website":"site"
+  }
+ * @apiError AlreadyExists Website already exists
+ * @apiErrorExample {json} Error-Response:
+  HTTP/1.1 409 Conflict
+    {
+      "error":"AlreadyExists",
+      "reason":
+    }
+ */
+router.post('/register-website', webreg.isLoggedIn, webreg.registerNewWebsite, function (req, res, next) {
+    res.redirect("settings"); 
+});
+
+/**
  * @api {get} /websites/register Request registration page
  * @apiName RegisterWebsitePage
  * @apiGroup WebsiteManagement
@@ -70,6 +110,8 @@ router.post('/register', function (req, res, next) {
 }
 );
 
+
+
 /**
  * @api {get}  /websites/login Request the website login page
  * @apiName LoginWebsiteManager
@@ -121,9 +163,13 @@ router.get('/settings', webreg.isLoggedIn,
     function (req, res, next) {
     
     var game_list = userAccount.findOne({ 'username': req.user.username }, function (err, user) {
-        
+        console.log(user._id);
         webAccount.find({ 'user_id': user._id }, function (err, website) {
             var temp = website[0].name;
+            //In case the user has no registered websites
+            if (website.length == 0) {
+                website = [];
+            }
             res.render('website/website-settings', {
                 username: req.user.username,
                 games: website
@@ -162,8 +208,8 @@ router.get('/settings/:websiteid',
 
 });
 
-router.param('websiteid', function (req, res, next, id){
-
+router.param('websiteid', function (req, res, next, id) {
+    
     req.website = id;
     next();
 })

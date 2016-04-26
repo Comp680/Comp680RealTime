@@ -11,7 +11,7 @@
     "cookie-parser": "~1.3.5",
     "debug": "~2.2.0",
     "express": "~4.13.1",
-	"express-session":"*",
+    "express-session": "*",
     "jade": "~1.11.0",
     "morgan": "~1.6.1",
     "serve-favicon": "~2.3.0",
@@ -19,8 +19,8 @@
     "socket.io-client": "*",
     "http": "*",
     "queue": "*",
-    "node-uuid":"*",
-	"mongoose":"*",
+    "node-uuid": "*",
+    "mongoose": "*",
     "passport": "^0.2.1",
     "passport-local": "^1.0.0",
     "passport-local-mongoose": "^1.0.0",
@@ -33,18 +33,20 @@
     "mongodb": "*",
     "connect-mongo": "*",
     "bootstrap": "*",
-    "admin-lte": "*"
+    "admin-lte": "*",
+    "redis": "*"
   },
   "devDependencies": {
+    "chai": "^3.5.0",
     "grunt": "^0.4.5",
+    "grunt-contrib-clean": "*",
+    "grunt-contrib-concat": "*",
+    "grunt-contrib-copy": "*",
+    "grunt-contrib-cssmin": "*",
     "grunt-contrib-jshint": "*",
     "grunt-contrib-nodeunit": "*",
     "grunt-contrib-uglify": "*",
-    "grunt-contrib-concat":"*",
-    "grunt-contrib-copy":"*",
-    "grunt-contrib-clean":"*",
-	"grunt-contrib-cssmin":"*",
-	"jsdoc":"*",
-	"ink-docstrap":"*"
+    "ink-docstrap": "*",
+    "jsdoc": "*"
   }
 }

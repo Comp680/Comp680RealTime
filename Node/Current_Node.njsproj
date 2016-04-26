@@ -23,6 +23,7 @@
     <Content Include="package.json" />
     <Content Include="README.md" />
     <Compile Include="app.js" />
+    <Compile Include="controller\redis-controller.js" />
     <Compile Include="controller\website_registration.js" />
     <Compile Include="Gruntfile.js" />
     <Content Include="api_help\index.html" />
@@ -253,6 +254,7 @@
     <Compile Include="public\javascript\chat_front.js" />
     <Content Include="public\stylesheets\style.css" />
     <Content Include="views\website\login.jade" />
+    <Content Include="views\website\register-website.jade" />
     <Content Include="views\website\register.jade" />
     <Content Include="views\website\settings.jade" />
     <Content Include="views\website\top_bar.jade" />

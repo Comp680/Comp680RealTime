@@ -41,7 +41,9 @@ function registerNewWebsite(req, res, next) {
     if (req.body.website && req['user']) {
         console.log(req['user']._id);
         (new Account({ name: req.body.website, user_id: req['user']._id })).save(function (err) {
-            if (err) return next(err);
+            if (err) {
+                return next(err);
+            }
         });
     } else {
         return next(err);

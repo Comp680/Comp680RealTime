@@ -1,0 +1,17 @@
+﻿extends top_bar
+ 
+block internal_content
+    table.table.striped-table
+        thead
+            tr
+                th
+                    |Name
+        if games.length > 0
+            tbody
+                - each item in games
+                    tr
+                        td= item.name
+                        td
+                            a.btn.btn-default(href="/website/settings/" + item.name) Edit
+        else 
+            a.btn.btn-default(href="/website/register-website") Add First Site

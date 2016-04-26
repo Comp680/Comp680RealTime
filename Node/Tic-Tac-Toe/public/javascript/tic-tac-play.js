@@ -39,7 +39,7 @@ $(document)
 						$("#Player_Letter").html(user_letter);
 					}
 
-					var game = $.fn.ClientGame("localhost:3000", 4, options);
+					var game = $.fn.ClientGame("localhost:1992", 4, options);
 					waiting_for_user = true;
 					game.connectToServer();
 					game.joinGame({
@@ -194,9 +194,9 @@ $(document)
 							reset_board();
 							game.joinGame("Player Joined");
 						} else {
-						    
+
 						}
-						
+
 					}
 
 				});

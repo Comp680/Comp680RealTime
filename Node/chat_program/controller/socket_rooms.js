@@ -1,5 +1,10 @@
 var uuid = require('node-uuid');
-
+var mongoose = require('mongoose');
+var _roomRedis = require("./redis-controller.js");
+//var red = _roomRedis.RoomConnections("localhost",6379);
+//red.addRoom("321", "435");
+//red.addUserToRoom("321", "435", "test", "567");
+mongoose.createConnection()
 /**
  * Contains information about the current room which has been created
  * 
@@ -81,7 +86,9 @@ function waiting_rooms(min_room_size, max_room_size) {
 	this.find_open_rooms = function(socket, game_id) {
 		// List of all rooms available
 		var rooms = socket.adapter.rooms;
-		var available_rooms;
+        var available_rooms;
+        
+
 		if (this.games.length === 0
 				|| typeof this.games[game_id] === 'undefined') {
 			// Create a new list if the game_id has no games

@@ -4,7 +4,7 @@
         "dictionaries": ["jsdoc","closure"]
     },
     "source": {
-		"include":["public/","controller/"],
+		"include":["public/","controller/","models/"],
 		"exclude":["node_modules","Gruntfile.js","build"],
         "includePattern": ".+\\.js(doc)?$",
         "excludePattern": "(^|\\/|\\\\)_"

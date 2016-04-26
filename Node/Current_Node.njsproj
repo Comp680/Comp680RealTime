@@ -1,0 +1,346 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{7af93e9d-1c28-415e-90d3-2fff7bdda448}</ProjectGuid>
+    <ProjectHome>chat_program\</ProjectHome>
+    <ProjectView>ShowAllFiles</ProjectView>
+    <StartupFile>bin\www</StartupFile>
+    <WorkingDirectory>.</WorkingDirectory>
+    <OutputPath>.</OutputPath>
+    <ProjectTypeGuids>{3AF33F2E-1136-4D97-BBB7-1795711AC8B8};{349c5851-65df-11da-9384-00065b846f21};{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}</ProjectTypeGuids>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">11.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+    <NodejsPort>3000</NodejsPort>
+    <StartWebBrowser>False</StartWebBrowser>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
+  <ItemGroup>
+    <Content Include="apidoc.json" />
+    <Content Include="conf.json" />
+    <Content Include="package.json" />
+    <Content Include="README.md" />
+    <Compile Include="app.js" />
+    <Compile Include="controller\redis-controller.js" />
+    <Compile Include="controller\website_registration.js" />
+    <Compile Include="Gruntfile.js" />
+    <Content Include="api_help\index.html" />
+    <Content Include="api_help\api_data.json" />
+    <Content Include="api_help\api_project.json" />
+    <Content Include="api_help\swagger.json" />
+    <Compile Include="api_help\api_data.js" />
+    <Compile Include="api_help\api_project.js" />
+    <Compile Include="api_help\main.js" />
+    <Compile Include="build\app.js" />
+    <Compile Include="build\Gruntfile.js" />
+    <Compile Include="controller\cor_configuration.js" />
+    <Compile Include="controller\server_sockets.js" />
+    <Compile Include="controller\socket_rooms.js" />
+    <Compile Include="controller\users.js" />
+    <Content Include="doc\index.html" />
+    <Content Include="doc\api_data.json" />
+    <Content Include="doc\api_project.json" />
+    <Compile Include="doc\api_data.js" />
+    <Compile Include="doc\api_project.js" />
+    <Compile Include="doc\main.js" />
+    <Content Include="help_files\classes.list.html" />
+    <Content Include="help_files\create_socket.html" />
+    <Content Include="help_files\external-_http.Server_.html" />
+    <Content Include="help_files\external-io.html" />
+    <Content Include="help_files\externals.list.html" />
+    <Content Include="help_files\http.external_Server.html" />
+    <Content Include="help_files\index.html" />
+    <Content Include="help_files\module.exports.html" />
+    <Content Include="help_files\quicksearch.html" />
+    <Content Include="help_files\room_information_container.html" />
+    <Content Include="help_files\server_sockets.js.html" />
+    <Content Include="help_files\socket_rooms.js.html" />
+    <Content Include="help_files\waiting_rooms.html" />
+    <Compile Include="models\account.js" />
+    <Compile Include="models\DataContainer.js" />
+    <Compile Include="models\games.js" />
+    <Compile Include="models\webaccount.js" />
+    <Compile Include="routes\chat.js" />
+    <Compile Include="routes\games.js" />
+    <Compile Include="routes\index.js" />
+    <Compile Include="routes\users.js" />
+    <Compile Include="routes\websites.js" />
+    <Content Include="views\chat.jade" />
+    <Content Include="views\error.jade" />
+    <Content Include="views\index.jade" />
+    <Content Include="views\index2.jade" />
+    <Content Include="views\layout.jade" />
+    <Content Include="views\login.jade" />
+    <Content Include="views\login_layout.jade" />
+    <Content Include="views\register.jade" />
+    <Content Include="api_help\css\style.css" />
+    <Content Include="api_help\img\glyphicons-halflings-white.png" />
+    <Content Include="api_help\img\glyphicons-halflings.png" />
+    <Content Include="api_help\img\favicon.ico" />
+    <Compile Include="api_help\locales\ca.js" />
+    <Compile Include="api_help\locales\de.js" />
+    <Compile Include="api_help\locales\es.js" />
+    <Compile Include="api_help\locales\fr.js" />
+    <Compile Include="api_help\locales\locale.js" />
+    <Compile Include="api_help\locales\nl.js" />
+    <Compile Include="api_help\locales\pl.js" />
+    <Compile Include="api_help\locales\pt_br.js" />
+    <Compile Include="api_help\locales\ru.js" />
+    <Compile Include="api_help\locales\zh.js" />
+    <Compile Include="api_help\locales\zh_cn.js" />
+    <Compile Include="api_help\utils\handlebars_helper.js" />
+    <Compile Include="api_help\utils\send_sample_request.js" />
+    <Content Include="api_help\vendor\bootstrap-responsive.min.css" />
+    <Content Include="api_help\vendor\bootstrap.min.css" />
+    <Content Include="api_help\vendor\prettify.css" />
+    <Compile Include="api_help\vendor\bootstrap.min.js" />
+    <Compile Include="api_help\vendor\diff_match_patch.min.js" />
+    <Compile Include="api_help\vendor\handlebars.min.js" />
+    <Compile Include="api_help\vendor\jquery.min.js" />
+    <Compile Include="api_help\vendor\lodash.min.js" />
+    <Compile Include="api_help\vendor\polyfill.js" />
+    <Compile Include="api_help\vendor\require.min.js" />
+    <Compile Include="api_help\vendor\semver.min.js" />
+    <Compile Include="api_help\vendor\webfontloader.js" />
+    <Compile Include="api_help\vendor\path-to-regexp\index.js" />
+    <Content Include="api_help\vendor\prettify\prettify.css" />
+    <Compile Include="api_help\vendor\prettify\lang-apollo.js" />
+    <Compile Include="api_help\vendor\prettify\lang-basic.js" />
+    <Compile Include="api_help\vendor\prettify\lang-clj.js" />
+    <Compile Include="api_help\vendor\prettify\lang-css.js" />
+    <Compile Include="api_help\vendor\prettify\lang-dart.js" />
+    <Compile Include="api_help\vendor\prettify\lang-erlang.js" />
+    <Compile Include="api_help\vendor\prettify\lang-go.js" />
+    <Compile Include="api_help\vendor\prettify\lang-hs.js" />
+    <Compile Include="api_help\vendor\prettify\lang-lisp.js" />
+    <Compile Include="api_help\vendor\prettify\lang-llvm.js" />
+    <Compile Include="api_help\vendor\prettify\lang-lua.js" />
+    <Compile Include="api_help\vendor\prettify\lang-matlab.js" />
+    <Compile Include="api_help\vendor\prettify\lang-ml.js" />
+    <Compile Include="api_help\vendor\prettify\lang-mumps.js" />
+    <Compile Include="api_help\vendor\prettify\lang-n.js" />
+    <Compile Include="api_help\vendor\prettify\lang-pascal.js" />
+    <Compile Include="api_help\vendor\prettify\lang-proto.js" />
+    <Compile Include="api_help\vendor\prettify\lang-r.js" />
+    <Compile Include="api_help\vendor\prettify\lang-rd.js" />
+    <Compile Include="api_help\vendor\prettify\lang-scala.js" />
+    <Compile Include="api_help\vendor\prettify\lang-sql.js" />
+    <Compile Include="api_help\vendor\prettify\lang-tcl.js" />
+    <Compile Include="api_help\vendor\prettify\lang-tex.js" />
+    <Compile Include="api_help\vendor\prettify\lang-vb.js" />
+    <Compile Include="api_help\vendor\prettify\lang-vhdl.js" />
+    <Compile Include="api_help\vendor\prettify\lang-wiki.js" />
+    <Compile Include="api_help\vendor\prettify\lang-xq.js" />
+    <Compile Include="api_help\vendor\prettify\lang-yaml.js" />
+    <Compile Include="api_help\vendor\prettify\prettify.js" />
+    <Compile Include="api_help\vendor\prettify\run_prettify.js" />
+    <Compile Include="build\controller\server_sockets.js" />
+    <Compile Include="build\routes\chat.js" />
+    <Compile Include="build\routes\index.js" />
+    <Compile Include="build\routes\users.js" />
+    <Content Include="build\views\chat.jade" />
+    <Content Include="build\views\error.jade" />
+    <Content Include="build\views\index.jade" />
+    <Content Include="build\views\layout.jade" />
+    <Compile Include="build\public\javascript\chat_front.min.js" />
+    <Content Include="build\public\stylesheets\style.min.css" />
+    <Content Include="doc\css\style.css" />
+    <Content Include="doc\img\glyphicons-halflings-white.png" />
+    <Content Include="doc\img\glyphicons-halflings.png" />
+    <Content Include="doc\img\favicon.ico" />
+    <Compile Include="doc\locales\ca.js" />
+    <Compile Include="doc\locales\de.js" />
+    <Compile Include="doc\locales\es.js" />
+    <Compile Include="doc\locales\fr.js" />
+    <Compile Include="doc\locales\locale.js" />
+    <Compile Include="doc\locales\nl.js" />
+    <Compile Include="doc\locales\pl.js" />
+    <Compile Include="doc\locales\pt_br.js" />
+    <Compile Include="doc\locales\ru.js" />
+    <Compile Include="doc\locales\zh.js" />
+    <Compile Include="doc\locales\zh_cn.js" />
+    <Compile Include="doc\utils\handlebars_helper.js" />
+    <Compile Include="doc\utils\send_sample_request.js" />
+    <Content Include="doc\vendor\bootstrap-responsive.min.css" />
+    <Content Include="doc\vendor\bootstrap.min.css" />
+    <Content Include="doc\vendor\prettify.css" />
+    <Compile Include="doc\vendor\bootstrap.min.js" />
+    <Compile Include="doc\vendor\diff_match_patch.min.js" />
+    <Compile Include="doc\vendor\handlebars.min.js" />
+    <Compile Include="doc\vendor\jquery.min.js" />
+    <Compile Include="doc\vendor\lodash.min.js" />
+    <Compile Include="doc\vendor\polyfill.js" />
+    <Compile Include="doc\vendor\require.min.js" />
+    <Compile Include="doc\vendor\semver.min.js" />
+    <Compile Include="doc\vendor\webfontloader.js" />
+    <Compile Include="doc\vendor\path-to-regexp\index.js" />
+    <Content Include="doc\vendor\prettify\prettify.css" />
+    <Compile Include="doc\vendor\prettify\lang-apollo.js" />
+    <Compile Include="doc\vendor\prettify\lang-basic.js" />
+    <Compile Include="doc\vendor\prettify\lang-clj.js" />
+    <Compile Include="doc\vendor\prettify\lang-css.js" />
+    <Compile Include="doc\vendor\prettify\lang-dart.js" />
+    <Compile Include="doc\vendor\prettify\lang-erlang.js" />
+    <Compile Include="doc\vendor\prettify\lang-go.js" />
+    <Compile Include="doc\vendor\prettify\lang-hs.js" />
+    <Compile Include="doc\vendor\prettify\lang-lisp.js" />
+    <Compile Include="doc\vendor\prettify\lang-llvm.js" />
+    <Compile Include="doc\vendor\prettify\lang-lua.js" />
+    <Compile Include="doc\vendor\prettify\lang-matlab.js" />
+    <Compile Include="doc\vendor\prettify\lang-ml.js" />
+    <Compile Include="doc\vendor\prettify\lang-mumps.js" />
+    <Compile Include="doc\vendor\prettify\lang-n.js" />
+    <Compile Include="doc\vendor\prettify\lang-pascal.js" />
+    <Compile Include="doc\vendor\prettify\lang-proto.js" />
+    <Compile Include="doc\vendor\prettify\lang-r.js" />
+    <Compile Include="doc\vendor\prettify\lang-rd.js" />
+    <Compile Include="doc\vendor\prettify\lang-scala.js" />
+    <Compile Include="doc\vendor\prettify\lang-sql.js" />
+    <Compile Include="doc\vendor\prettify\lang-tcl.js" />
+    <Compile Include="doc\vendor\prettify\lang-tex.js" />
+    <Compile Include="doc\vendor\prettify\lang-vb.js" />
+    <Compile Include="doc\vendor\prettify\lang-vhdl.js" />
+    <Compile Include="doc\vendor\prettify\lang-wiki.js" />
+    <Compile Include="doc\vendor\prettify\lang-xq.js" />
+    <Compile Include="doc\vendor\prettify\lang-yaml.js" />
+    <Compile Include="doc\vendor\prettify\prettify.js" />
+    <Compile Include="doc\vendor\prettify\run_prettify.js" />
+    <Content Include="help_files\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="help_files\fonts\OpenSans-Bold-webfont.svg" />
+    <Content Include="help_files\fonts\OpenSans-BoldItalic-webfont.svg" />
+    <Content Include="help_files\fonts\OpenSans-Italic-webfont.svg" />
+    <Content Include="help_files\fonts\OpenSans-Light-webfont.svg" />
+    <Content Include="help_files\fonts\OpenSans-LightItalic-webfont.svg" />
+    <Content Include="help_files\fonts\OpenSans-Regular-webfont.svg" />
+    <Content Include="help_files\img\glyphicons-halflings-white.png" />
+    <Content Include="help_files\img\glyphicons-halflings.png" />
+    <Compile Include="help_files\scripts\docstrap.lib.js" />
+    <Compile Include="help_files\scripts\fulltext-search-ui.js" />
+    <Compile Include="help_files\scripts\fulltext-search.js" />
+    <Compile Include="help_files\scripts\linenumber.js" />
+    <Compile Include="help_files\scripts\lunr.min.js" />
+    <Compile Include="help_files\scripts\sunlight.js" />
+    <Compile Include="help_files\scripts\toc.js" />
+    <Content Include="help_files\styles\darkstrap.css" />
+    <Content Include="help_files\styles\jsdoc-default.css" />
+    <Content Include="help_files\styles\prettify-jsdoc.css" />
+    <Content Include="help_files\styles\prettify-tomorrow.css" />
+    <Content Include="help_files\styles\site.cerulean.css" />
+    <Content Include="help_files\styles\site.cosmo.css" />
+    <Content Include="help_files\styles\site.cyborg.css" />
+    <Content Include="help_files\styles\site.darkly.css" />
+    <Content Include="help_files\styles\site.darkstrap.css" />
+    <Content Include="help_files\styles\site.dibs-bootstrap.css" />
+    <Content Include="help_files\styles\site.flatly.css" />
+    <Content Include="help_files\styles\site.journal.css" />
+    <Content Include="help_files\styles\site.lumen.css" />
+    <Content Include="help_files\styles\site.paper.css" />
+    <Content Include="help_files\styles\site.readable.css" />
+    <Content Include="help_files\styles\site.sandstone.css" />
+    <Content Include="help_files\styles\site.simplex.css" />
+    <Content Include="help_files\styles\site.slate.css" />
+    <Content Include="help_files\styles\site.spacelab.css" />
+    <Content Include="help_files\styles\site.superhero.css" />
+    <Content Include="help_files\styles\site.united.css" />
+    <Content Include="help_files\styles\site.yeti.css" />
+    <Content Include="help_files\styles\sunlight.dark.css" />
+    <Content Include="help_files\styles\sunlight.default.css" />
+    <Content Include="help_files\scripts\prettify\Apache-License-2.0.txt" />
+    <Compile Include="help_files\scripts\prettify\jquery.min.js" />
+    <Compile Include="help_files\scripts\prettify\lang-css.js" />
+    <Compile Include="help_files\scripts\prettify\prettify.js" />
+    <Compile Include="public\javascript\chat_front.js" />
+    <Content Include="public\stylesheets\style.css" />
+    <Content Include="views\website\login.jade" />
+    <Content Include="views\website\register-website.jade" />
+    <Content Include="views\website\register.jade" />
+    <Content Include="views\website\settings.jade" />
+    <Content Include="views\website\top_bar.jade" />
+    <Content Include="views\website\website-settings.jade" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="api_help" />
+    <Folder Include="api_help\css" />
+    <Folder Include="api_help\img" />
+    <Folder Include="api_help\locales" />
+    <Folder Include="api_help\utils" />
+    <Folder Include="api_help\vendor" />
+    <Folder Include="api_help\vendor\path-to-regexp" />
+    <Folder Include="api_help\vendor\prettify" />
+    <Folder Include="bin" />
+    <Folder Include="build" />
+    <Folder Include="build\bin" />
+    <Folder Include="build\controller" />
+    <Folder Include="build\public" />
+    <Folder Include="build\public\javascript" />
+    <Folder Include="build\public\stylesheets" />
+    <Folder Include="build\routes" />
+    <Folder Include="build\views" />
+    <Folder Include="controller" />
+    <Folder Include="doc" />
+    <Folder Include="doc\css" />
+    <Folder Include="doc\img" />
+    <Folder Include="doc\locales" />
+    <Folder Include="doc\utils" />
+    <Folder Include="doc\vendor" />
+    <Folder Include="doc\vendor\path-to-regexp" />
+    <Folder Include="doc\vendor\prettify" />
+    <Folder Include="help_files" />
+    <Folder Include="help_files\fonts" />
+    <Folder Include="help_files\img" />
+    <Folder Include="help_files\scripts" />
+    <Folder Include="help_files\scripts\prettify" />
+    <Folder Include="help_files\styles" />
+    <Folder Include="models" />
+    <Folder Include="public" />
+    <Folder Include="public\javascript" />
+    <Folder Include="public\stylesheets" />
+    <Folder Include="routes" />
+    <Folder Include="views" />
+    <Folder Include="views\website" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <!--Do not delete the following Import Project.  While this appears to do nothing it is a marker for setting TypeScript properties before our import that depends on them.-->
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="False" />
+  <Import Project="$(VSToolsPath)\Node.js Tools\Microsoft.NodejsTools.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>0</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:48022/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>True</UseCustomServer>
+          <CustomServerUrl>http://localhost:1337</CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}" User="">
+        <WebProjectProperties>
+          <StartPageUrl>
+          </StartPageUrl>
+          <StartAction>CurrentPage</StartAction>
+          <AspNetDebugging>True</AspNetDebugging>
+          <SilverlightDebugging>False</SilverlightDebugging>
+          <NativeDebugging>False</NativeDebugging>
+          <SQLDebugging>False</SQLDebugging>
+          <ExternalProgram>
+          </ExternalProgram>
+          <StartExternalURL>
+          </StartExternalURL>
+          <StartCmdLineArguments>
+          </StartCmdLineArguments>
+          <StartWorkingDirectory>
+          </StartWorkingDirectory>
+          <EnableENC>False</EnableENC>
+          <AlwaysStartWebServerOnDebug>False</AlwaysStartWebServerOnDebug>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

@@ -1,0 +1,40 @@
+﻿extends top_bar
+ 
+block internal_content
+    table.table.striped-table
+        thead
+            tr
+                th
+                    |Name
+                th
+                    |Max Players
+                th 
+                    |Min Players
+                th 
+                    |id
+        tbody
+            - each item in games
+                tr
+                    td= item.name
+                    td= item.max_players
+                    td= item.min_players
+                    td= item.game_id
+            tr
+                form(role='form', action="/website/games/add", method="post", style='max-width: 300px;')
+                    td
+                     .form-group
+                        input.form-control(type='text', name="name", placeholder='Game Name') 
+                    td
+                     .form-group
+                        input.form-control(type='text', name="max_players", placeholder='Max Players') 
+                    td 
+                     .form-group
+                        input.form-control(type='text', name="min_players", placeholder='Min Players') 
+                    td
+                      .form-group
+                        input.form-control(type='hidden',name="website", value=website, disabled) 
+                        input.form-control(type='hidden',name="website", value=website) 
+                        
+                    td
+                        button.btn.btn-default(type='submit') Submit
+    

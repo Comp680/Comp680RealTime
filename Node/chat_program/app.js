@@ -4,10 +4,17 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var passport = require('./controller/users');
+var express_session = require('express-session');
+var MongoStore = require('connect-mongo')(express_session);
+var DataContainer = require('./models/DataContainer');
 
+//Routes
+var website = require('./routes/websites');
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var chat = require('./routes/chat');
+var games = require('./routes/games');
 var app = express();
 
 // view engine setup
@@ -21,11 +28,24 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express_session({
+    key: 'express.sid',
+    store: new MongoStore({
+        "url": DataContainer.sessionStoragedb
+    }),
+    secret: 'worldwar1',
+    resave: false,
+    saveUninitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
 app.use('/modules',express.static(path.join(__dirname,'node_modules')));
 
 app.use('/', routes);
 app.use('/users', users);
 app.use('/chat',chat);
+app.use('/website',website);
+app.use('/website/games', games);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

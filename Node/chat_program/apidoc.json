@@ -1,0 +1,14 @@
+{
+  "name": "Game Backend",
+  "version": "0.3.0",
+  "description": "Backend",
+  "title": "Backend",
+  "url" : "https://localhost:3000",
+  "sampleUrl": "https://localhost:3000",
+  "template": {
+  	"withCompare": true,
+  	"withGenerator": true
+  },
+  "src": ["routes/"],
+  "dest": "api_help/"
+}

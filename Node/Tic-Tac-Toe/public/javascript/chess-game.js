@@ -9,7 +9,7 @@ var board, game = new Chess(), statusEl = $('#status'), fenEl = $('#fen'), pgnEl
 var player_color,player_color_regex,
 game_started=false;
 
-online_chess = $.fn.ClientGame("localhost:3000", 3, options);
+online_chess = $.fn.ClientGame("localhost:3000", "068474f0-0ef1-11e6-aac2-7f7f2ad9da18", options);
 
 // Connect to the server
 online_chess.connectToServer();

@@ -193,7 +193,7 @@ router.get('/settings', webreg.isLoggedIn,
 router.get('/settings/:websiteid', 
     webreg.isLoggedIn, 
     function (req, res, next) {
-    webAccount.findOne({ 'name': req.website , 'user_id': req.user._id }, 
+    webAccount.findOne({ '_id': req.website , 'user_id': req.user._id }, 
         function (err, website) {
         if (err) { return next(err) };
         
@@ -201,6 +201,7 @@ router.get('/settings/:websiteid',
         res.render('website/settings', {
             username: req.user.username,
             'website': website.name,
+            'website_id':website._id,
             games: website.game_code
         })
     })

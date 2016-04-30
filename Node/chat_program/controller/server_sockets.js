@@ -34,7 +34,7 @@ var wait_rooms = new room_object(room_min_size, room_max_size);
 function create_socket(io) {
     
     //Check if the current connection attempt is from a registered site
-    io.use(function (socket,accept) {
+    io.use(function (socket, accept) {
         webreg.isRegistered(socket.request, accept);
     });
     
@@ -51,7 +51,7 @@ function create_socket(io) {
         fail: onAuthorizeFail,     // *optional* callback on fail/error - read more below 
     }));
     
-
+    
     /**
      * The authorization of the socket was successful, user was logged in
          * @param {Object} data - The data passed from the successful connection 
@@ -130,13 +130,13 @@ function create_socket(io) {
      * @property {Any} msg - message sent by user
      * @property {Object} server - information sent by server
       */
-    function buildJsonMessageObject(msg){
+    function buildJsonMessageObject(msg) {
         if (typeof msg.server == 'undefined')
             msg.server = {};
-
+        
         return {
-            'msg':msg.msg,
-            'server':msg.server
+            'msg': msg.msg,
+            'server': msg.server
         };
     }
     
@@ -188,7 +188,15 @@ function create_socket(io) {
      * @access private
      */
     socket.on('join_game', function (msg) {
-            var room_info = wait_rooms.add_to_room(socket, msg.game_id);
+            wait_rooms.add_to_room(socket, msg.game_id,msg,FinishJoinGame);
+        });
+        
+        /**
+         * Callback function for finising joining a game 
+         * @param {object} msg - The message to return to the user
+         * @param {object} room_info - The information about the current room
+         **/
+        function FinishJoinGame(msg,room_info) {
             var room_num = room_info.room;
             /**
        * Sends a message to the client that they have successfully joined a game
@@ -224,7 +232,7 @@ function create_socket(io) {
                 start_game(socket, room_num);
             }
 
-        });
+        }
         
         /**
      * The game should be started. Send notification of start to users.

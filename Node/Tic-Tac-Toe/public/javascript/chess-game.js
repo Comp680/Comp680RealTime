@@ -1,9 +1,10 @@
 var board, game = new Chess(), statusEl = $('#status'), fenEl = $('#fen'), pgnEl = $('#pgn'),player_color_dis = $("#piece_color"), options = {
-	onThisClientJoinGame : userJoin,// User joins lobby
+	onThisClientJoinGame : onUsJoin,// We joins lobby
 	onRecievePacket : updateOnlineBoard, // User recieves data packet
 	onGameStart : gameStart,// Lobby is full, user can begin game
 	connectionStatus : connectionSuccess, // Connection has been made successfully
-	onOtherUserDisconnect : OnUserDisconnect //Other player has disconnected
+	onOtherUserDisconnect : OnUserDisconnect, //Other player has disconnected
+	onUserJoin: userJoin
 };
 
 var player_color,player_color_regex,
@@ -16,7 +17,14 @@ online_chess.connectToServer();
 online_chess.joinGame("Player Joined");
 
 function userJoin(msg){
+$("#players").append("<p>" + msg.server.username + "</p>");
+}
 
+function onUsJoin(msg){
+for(var i=0; i< msg.server.player_list.length;i++){
+	$("#players").append("<p>" + msg.server.player_list[i]+ "</p>");
+	
+}
 }
 
 function OnUserDisconnect(msg){
@@ -25,7 +33,7 @@ function OnUserDisconnect(msg){
 		board = ChessBoard('board', cfg);
 		game = new Chess();
 		update_screen_values();
-
+		$("#players").empty();
 		online_chess.joinGame("Player Joined");
 	} else {
 

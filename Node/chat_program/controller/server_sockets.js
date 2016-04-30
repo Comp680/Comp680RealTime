@@ -211,7 +211,10 @@ function create_socket(io) {
                 // Send message to user
                 // based on their room
                 'msg': msg.msg,
-                'player': room_info.user_number
+                'player': room_info.user_number,
+                'server': {
+                    'player_list':room_info.player_list
+                }
             });
             
             //Emit message to other users of a new client joining

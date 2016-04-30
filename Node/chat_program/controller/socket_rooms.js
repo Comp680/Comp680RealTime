@@ -23,6 +23,7 @@ function room_information_container(room_id) {
 	 * Stores the current id of the room
 	 */
 	this.id = room_id;
+    this.playerList=[];
     this.ready = false;
     return this;
 }
@@ -82,13 +83,14 @@ function waiting_rooms(min_room_size, max_room_size) {
             
             
             var open_room = _currentRooms.find_open_rooms(user_socket, game_id, _min_required_players);
-            
+            open_room.playerList.push(user_socket.request.user.username);
             user_socket.join(open_room.id);
             _currentRooms.number_in_room++;
             
             callback(msg, {
                 'room' : open_room,
-                'user_number' : _currentRooms.number_in_room,
+                'user_number' : open_room.playerList.length,
+                'player_list':open_room.playerList,
                 'full' : open_room.ready
             });
 

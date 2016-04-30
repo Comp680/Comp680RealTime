@@ -36,7 +36,7 @@ router.post("/add", webreg.isLoggedIn, function (req, res, next) {
     
     Account.findOneAndUpdate(
         {
-            'name': req.body.website,
+            '_id': req.body.website,
             'user_id': req.user._id
         }, 
         {
